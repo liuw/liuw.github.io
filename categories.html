@@ -1,103 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
-    <meta charset="utf-8">
-    <title>Liuw's Thinkpad</title>
-    <meta name="description" content="">
-    <meta name="author" content="Wei Liu">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="/theme/css/style.css">
+	<!--<link rel="stylesheet/less" type="text/css" href="/theme/css/style.less">-->
+	<!--<script src="/theme/js/less.js" type="text/javascript"></script>-->
+	<link rel="stylesheet" type="text/css" href="/theme/css/pygments.css">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:800,400,300|Inconsolata' rel='stylesheet' type='text/css'>
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-    <!--[if lt IE 9]>
-    <script src="./theme/html5.js"></script>
-    <![endif]-->
-
-    <!-- Le styles -->
-    <link href="./theme/bootstrap.min.css" rel="stylesheet">
-    <link href="./theme/bootstrap.min.responsive.css" rel="stylesheet">
-    <link href="./theme/local.css" rel="stylesheet">
-    <link href="./theme/pygments.css" rel="stylesheet">
-
-</head>
-
+	<link href="http://blog.liuw.name/" type="application/atom+xml" rel="alternate" title="Liuw's Thinkpad ATOM Feed" />
+			<link href="http://blog.liuw.name/feeds/all.rss.xml" type="application/atom+xml" rel="alternate" title="Liuw's Thinkpad RSS Feed" />
+	
+			<title>Liuw's Thinkpad</title>
+		<meta charset="utf-8" />
+	</head>
 <body>
+	<section id="sidebar">
+		<figure id="user_logo">
+			<a href="/"><div class="logo">&nbsp;</div></a>
+		</figure>
 
-<div class="navbar">
-    <div class="navbar-inner">
-    <div class="container">
+		<div class="user_meta">
+			<h1 id="user"><a href="/" class="">Wei Liu</a></h1>
+			<h2></h2>
+			<ul>
+																			<li><a href="./pages/about.html">About</a></li>
+																</ul>
+		</div>
+		<footer>
+			<address>
+				Powered by <a href="http://pelican.notmyidea.org/">Pelican</a>,
+				theme by <a href="https://github.com/wting/pelican-svbtle">wting</a>.
+			</address>
+		</footer>
+	</section>
 
-         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-             <span class="icon-bar"></span>
-             <span class="icon-bar"></span>
-             <span class="icon-bar"></span>
-         </a>
+	<section id="posts">
+			<header>
+		<h1>Wei Liu's blog</h1>
+		<h3>
+			<script type="text/javascript">
+				var currentDate = new Date();
+				var day = currentDate.getDate();
+				var monthNames = [ "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+				var month = monthNames[currentDate.getMonth()].toUpperCase();
+				var year = currentDate.getFullYear();
+				document.write(month + " " + day + ", " + year);
+			</script>
+		</h3>
+	</header>
 
-        <a class="brand" href=".">Liuw's Thinkpad</a>
+	<dl id="tag_list">
+		<ul>
+					<li><a href="./category/life.html">Life</a></li>
+				</ul>
+	</dl>
+	</section>
 
-        <div class="nav-collapse">
-        <ul class="nav">
-                    
-                            <li><a href="./pages/about.html">About</a></li>
-                        </ul>
-        </div>
-        
-    </div>
-    </div>
-</div>
-
-<div class="container">
-    <div class="content">
-    <div class="row">
-
-        <div class="span9">
-        <ul>
-	<li><a href="./category/life.html">Life</li>
-</ul>
-
-        </div>
-        
-        <div class="span3">
-
-            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
-            <ul class="nav nav-list">
-                <li class="nav-header"> 
-                Site
-                </li>
-            
-                <li><a href="./archives.html">Archives</a>
-                <li><a href="./tags.html">Tags</a>
-                <li><a href="http://blog.liuw.name/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
-                                <li><a href="http://blog.liuw.name/feeds/all.rss.xml" rel="alternate">RSS feed</a></li>
-                            </ul>
-            </div>
-
-
-                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
-            <ul class="nav nav-list">
-                <li class="nav-header"> 
-                Categories
-                </li>
-                
-                                <li><a href="./category/life.html">Life</a></li>
-                                   
-            </ul>
-            </div>
-            
-
-            
-
-            
-        </div>  
-    </div>     </div> 
-<footer>
-<br />
-<p><a href=".">Liuw's Thinkpad</a> &copy; Wei Liu 2012</p>
-</footer>
-
-</div> <!-- /container -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-collapse.js"></script>
-<script>var _gaq=[['_setAccount','UA-28389287-1'],['_trackPageview']];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src='//www.google-analytics.com/ga.js';s.parentNode.insertBefore(g,s)}(document,'script'))</script>
- 
+	<script type="text/javascript">
+	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	<script type="text/javascript">
+		try {
+			var pageTracker = _gat._getTracker("UA-28389287-1");
+			pageTracker._trackPageview();
+		} catch(err) {}</script>
 </body>
 </html>
