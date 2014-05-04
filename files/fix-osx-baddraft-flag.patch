@@ -1,0 +1,56 @@
+The patch to CVE-2013-6466 removed ISAKMP_NEXT_NATD_BADDRAFTS from header file
+and changed the logic of process_packet_tail. It made Apple device not able to
+connect to openswan anymore.
+
+This patch restores relevant part of the code.
+Index: openswan-2.6.37/include/ietf_constants.h
+===================================================================
+--- openswan-2.6.37.orig/include/ietf_constants.h	2014-05-04 23:09:07.000000000 +0100
++++ openswan-2.6.37/include/ietf_constants.h	2014-05-04 23:11:38.926292704 +0100
+@@ -352,7 +352,8 @@
+ 	ISAKMP_NEXT_D        =  12,	/* Delete */
+ 	ISAKMP_NEXT_VID      =  13,	/* Vendor ID */
+ 	ISAKMP_NEXT_ATTR     =  14,       /* Mode config Attribute */
+-	ISAKMP_NEXT_SAK = 15, /* SA KEK Payload - RFC 6407 */
++	ISAKMP_NEXT_NATD_BADDRAFTS = 15, /* NAT-Traversal: NAT-D (bad drafts) */
++				/* !!! Conflicts with RFC 3547 */
+ 	ISAKMP_NEXT_TEK = 16, /* SA TEK Payload - RFC 6407 */
+ 	ISAKMP_NEXT_KD = 17, /* Key Download - RFC 3547 */
+ 	ISAKMP_NEXT_SEQ = 18, /* Sequence Number - RFC 3547 */
+Index: openswan-2.6.37/programs/pluto/ikev1.c
+===================================================================
+--- openswan-2.6.37.orig/programs/pluto/ikev1.c	2014-05-04 23:09:07.000000000 +0100
++++ openswan-2.6.37/programs/pluto/ikev1.c	2014-05-04 23:09:54.097342500 +0100
+@@ -1581,7 +1581,6 @@
+ 		    sd = payload_desc(np);
+ 		    break;
+ 
+-#if 0
+ 		case ISAKMP_NEXT_NATD_BADDRAFTS:
+ 			if (st && (st->hidden_variables.st_nat_traversal & NAT_T_WITH_NATD_BADDRAFT_VALUES)) {
+ 			    /*
+@@ -1593,7 +1592,6 @@
+ 		        break;
+ 		    }
+ #endif
+-#endif
+ 		default:
+ 		    loglog(RC_LOG_SERIOUS, "%smessage ignored because it contains an unknown or"
+ 			" unexpected payload type (%s) at the outermost level"
+Index: openswan-2.6.37/programs/pluto/nat_traversal.c
+===================================================================
+--- openswan-2.6.37.orig/programs/pluto/nat_traversal.c	2014-05-04 23:09:07.000000000 +0100
++++ openswan-2.6.37/programs/pluto/nat_traversal.c	2014-05-04 23:09:40.449218215 +0100
+@@ -368,8 +368,10 @@
+ 
+ 	DBG(DBG_EMITTING, DBG_log("sending NATD payloads"));
+ 
+-	nat_np = (st->hidden_variables.st_nat_traversal & NAT_T_WITH_RFC_VALUES)
+-		  ? ISAKMP_NEXT_NATD_RFC : ISAKMP_NEXT_NATD_DRAFTS;
++       nat_np = (st->hidden_variables.st_nat_traversal & NAT_T_WITH_RFC_VALUES
++                 ? ISAKMP_NEXT_NATD_RFC
++                 : (st->hidden_variables.st_nat_traversal & NAT_T_WITH_NATD_BADDRAFT_VALUES
++                    ? ISAKMP_NEXT_NATD_BADDRAFTS : ISAKMP_NEXT_NATD_DRAFTS));
+ 	if (!out_modify_previous_np(nat_np, outs)) {
+ 		return FALSE;
+ 	}
