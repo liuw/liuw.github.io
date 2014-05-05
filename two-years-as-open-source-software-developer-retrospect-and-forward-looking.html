@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>Two Years as Open Source Software Developer, Retrospect and Forward-looking - Liuw's Thinkpad</title>	
+	<meta name="author" content="Wei Liu">
+	
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0">
+	
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:700,400|Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="http://blog.liuw.name/theme/css/main.css" type="text/css" />
+		
+	<!--[if lt IE 9]>
+		<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+	
+	<link href="http://blog.liuw.name/" type="application/atom+xml" rel="alternate" title="Liuw's Thinkpad ATOM Feed" />
+	<link href="http://blog.liuw.name/feeds/all.rss.xml" type="application/atom+xml" rel="alternate" title="Liuw's Thinkpad RSS Feed" />
+</head>
+	
+<body>		
+	<header class="clearfix" role="banner">
+		<div class="wrapper">
+			<h1 class="huge"><a href="http://blog.liuw.name">Liuw's Thinkpad</a></h1>
+		</div>
+	</header>
+	
+<div role="main" class="content clearfix">	
+	<article>
+		<div class="post wrapper">
+			<h1>Two Years as Open Source Software Developer, Retrospect and Forward-looking</h1>
+			<p>I've been a developer for open source
+<a href="http://www.xenproject.org">Xen Project</a> for two years, and I also
+help develop <a href="http://github.com/pythoncn/june">June</a> in my spare
+time. What I've learned so far is that running a (proper) open source
+project is never an easy task.</p>
+<p><em>Open Source</em> means different thing to different people. To many
+people who's new to this concept, probably it just means "putting your
+source code in the public so that it can be useful to others".  This
+is of course a valid definition, but it's only the first stage of an
+open source project. If you want your project to thrive, to have
+bigger impact there's much more to do.</p>
+<p>As I understand it, a proper open source project should have:</p>
+<ol>
+<li>publicly avaiable source code</li>
+<li>proper open source license</li>
+<li>proper document to certain degree</li>
+<li>public channel for discussion</li>
+<li>well-defined development process and responsive maintainers</li>
+</ol>
+<p>Though I don't think Github does a great job in providing public
+channel for discussion, it does provide a viable solution for #4. It
+lowers the barrier to get involved in open source project. Mailing
+list is also popular amongst old-school hackers.</p>
+<p>All the rest pretty much depends on project owner / initiator. #1
+should be very easy to achieve. #2 and #3 are often overlooked,
+however.</p>
+<p>Not having a license is very likely to turn away potential
+contributors, because contributors have the right to know how their
+code is going to be used and avoid potential legal problems. It might
+be hard to choose one license from all those popular ones, but it's
+definitely something you need to decide at the very first beginning.</p>
+<p>It's a bit tricky to define "proper document to certain degree". I
+personally believe that the minimum degree of documentation should be
+able to help a fresh user / developer start using / developing the
+software without any major problem.</p>
+<p>The last item requires most time and effort. Many people develop open
+source software to get a paycheck, but more develop for fun and
+non-profit purpose. Wearing my latter hat as a developer for June, I
+often feel I don't have enough time to look at all the missing
+features and answer all the quesions. There's really no silver bullet,
+all we can do is to devote more time.</p>
+<p>As I mention in the beginning, I develop open source software for both
+profit and fun.  How good (bad) did we (the two teams) do? The
+following paragraphs are by no means claiming I made any significant
+contribution on the whole process. They are just my views and my views
+only.</p>
+<p>I think Xen Project is doing well in general. We've got a team of
+people who understand the development of open source projects. We try
+hard to work with upstream / downstream projects. All development
+activities happens in the public mailing list and process is
+well-defined. We hold regular Xen Docsday to update documents,
+etc. During the last year we've seen some siginifant improvement on
+the whole development process, especially after joining the Linux
+Foundation.</p>
+<p>As for June, it's not that good. I got involved in June one and a half
+years ago. June has always been an open source project since its
+genesis. What fell short is the last but most important item -- the
+process is not very well-defined and code not very well
+maintained. I'm not blaming anyone because noone gets benefit out of
+it by developing June, but how can we fix / improve things? Adding new
+features is important, however it's just impossible to develop all the
+features by my own. And in my opinion only by building an eco-system
+(however small) can we make a project healthy and prosper.</p>
+<p>When it comes to June, the core idea is that now we need to build a
+minimum viable product for both end users and developers. I've tried
+to identify some key steps to bootstrap and attract developers:</p>
+<ol>
+<li>improve documentation</li>
+<li>develop necessary features, better test coverage</li>
+<li>request for contribution</li>
+</ol>
+<p>I managed to spend some time on rewriting several documents and define
+a clearer development process. As for feature parity there's still
+lots of work to do. There're still lots of missing features on the
+TODO list. Unfortunately up to this point the core team is really on
+their own, requesting external contribution might be too early at this
+stage.</p>
+<p>I'm currently working on #2 on that list, though I cannot say for sure
+how much time I can put into it. At least I've got a plan and will try
+to stick to it. Let's see how it plays out.</p>
+			
+			<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+						
+			
+		</div>
+	
+<div class="meta wrapper">
+	<time datetime="2014-05-05T19:18:00" pubdate>Mon 05 May 2014</time>
+	<ul class="tag clearfix">
+		<li><a href="http://blog.liuw.name/category/tech.html">Tech</a></li>
+	</ul>
+</div>	</article>	
+</div>
+	
+		
+<footer class="clearfix">
+	<div class="wrapper pages">
+		<ul class="nav">
+			<li><a href="http://blog.liuw.name/pages/about.html">About</a></li>
+			<li><a href="http://blog.liuw.name/archives.html">Archive</a></li>
+		</ul>
+	</div>
+	
+	<div class="copy wrapper">
+		<ul class="social">
+		</ul>
+	
+		<p role="contentinfo">© 2012-2014 Wei Liu<br>
+		Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">Pelican</a>.</p>
+	</div>
+</footer>
+	
+	<script>
+	  var _gaq=[['_setAccount',''],['_trackPageview']];
+	  (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+	  g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+	  s.parentNode.insertBefore(g,s)}(document,'script'));
+	</script>
+</body>
+</html>
