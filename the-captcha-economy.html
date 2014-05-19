@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>The CAPTCHA Economy - Liuw's Thinkpad</title>	
+	<meta name="author" content="Wei Liu">
+	
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0">
+	
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:700,400|Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="http://blog.liuw.name/theme/css/main.css" type="text/css" />
+		
+	<!--[if lt IE 9]>
+		<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+	
+	<link href="http://blog.liuw.name/" type="application/atom+xml" rel="alternate" title="Liuw's Thinkpad ATOM Feed" />
+	<link href="http://blog.liuw.name/feeds/all.rss.xml" type="application/atom+xml" rel="alternate" title="Liuw's Thinkpad RSS Feed" />
+</head>
+	
+<body>		
+	<header class="clearfix" role="banner">
+		<div class="wrapper">
+			<h1 class="huge"><a href="http://blog.liuw.name">Liuw's Thinkpad</a></h1>
+		</div>
+	</header>
+	
+<div role="main" class="content clearfix">	
+	<article>
+		<div class="post wrapper">
+			<h1>The CAPTCHA Economy</h1>
+			<p>During daily lunch time chat yesterday in the office kitchen, my friend told me about a service he has been using for a while. And that provoked me to look further into this and discovered some interesting facts. Though not all of my questions about that service have been answered (either by him or my own investigation), I would still like to write down my thought so far.</p>
+<p>The service in question is a kind of service that use human power to recognise CAPTCHA images. As a client, you go to a website, register, top up some credit, then invoke their API to send images and get back results. Those CAPTCHA images are distributed to workers around the globe, then text result returned. There is a bidding system in place. If request volume is high then the price goes up, otherwise it goes down.</p>
+<p>My friend told me about one particular site he's using, but he also mentioned that there's tons of similar sites on the Internet. The service is charged at per request basis. The average cost for hiring someone behind a computer to recognise one image is about 1.5 cents. My friend told me that he paid $10 one year ago and he still had $7 credit when we had the conversation.</p>
+<p>I kind of think of this kind of service a clever hack to leverage machine power (to distribute and collect) and human power (to recognise patterns) to achieve certain goal. However, what's astonishing is that the average cost is so low that I don't even understand how this system manage to sustain itself. I mean, are those workers really get paid enough to feed themselves? </p>
+<p>I actually opened that site my friend is using when I got home. What's handy is that it shows various stats for its service. I can see, with the bidding system in place, the price for 1000 requests goes from $0.75 to $1.5. Most of the time the price stays around $1. That is, in my opinion, still too low. However I'm certainly wrong because this system seems to work fine. The site states it has been in business since 2007. Further down the site there is a pretty pie chart showing the distribution of workers worldwide. High on the top are Pakistan, India, Indonesia, Vietnam etc, which consist of more than 70% of all workers. China is also on the list with a number of ~3%. Interestingly USA is also on the pie chart, and it has more or less the same percentage of China. Russian and Ukrainian workers are also non-neglectable. The number of workers tops at 1000.</p>
+<p>My friend and I did some back-of-the-envelope calculation on the revenue of this service. Unfortunately I didn't take note about it so I'm here to do it again, from scratch. According to the material on the website, the average time to recognise an image is 15 seconds. But we decided to make it 10 seconds, given our own experience dealing with CAPTCHA images. So, for an average person like my friend and me, he can probably finish 6 requests per minute. That makes 360 requests per hour. Multiple that by 1000 (the maximum number of workers seen on the website from previous day's data), then divide that by 1000 (the average price for 1000 requests was $1). That yields the result of the maximum possible hourly revenue of that service, that is, $360/h. We had no idea the percentage that the service provider takes. If it is 10%, that makes it $60/h. I think that's probably enough to sustain the cost of maintenance, bandwidth etc, even enough to make small profit out of it.</p>
+<p>It might be profitable from service provider's point of view, but I still cannot see how feasible it is for a worker to make a living out of it. I also told another friend about this service and had a short discussion. Her idea is that probably the workers are not treating it as a full time job. But my point stands still, it's not profitable for a worker because you need a computer and Internet connection to do that job. The payback is not even likely to cover the expense, let alone make a profit / living out of it.</p>
+<p>I could be wrong, so I decided to go further. There's a line of text of much smaller font size saying "if you want to do data entry job, click here". I clicked that link, another website popped up. A remarkable line from the new website showed that the price can be as low as $0.35 per 1000 entries. I couldn't help asking myself how would anyone want to do this. Nonetheless I registered an worker account (with a newly registered email of course) and logged in.</p>
+<p>The interface is quite simple. The first page is "workspace", where you can look at the image you receive and enter text. For every image you receive there is a count down timer at the bottom, if you don't type at all during that time, the timer goes down. Presumably if the timer goes to zero the image is dispatched to other worker. But if you type anything, the timer is "refilled".</p>
+<p>I entered a few entries. Suddenly my work item was revoked and website told me that I entered one thing wrong -- well, I didn't pay much attention for sure. I was told that if I make 5 mistakes in a month my account will be banned. That's quite scary, given the amount of work you required to do to make so little (1000 entries for $1) and the mistakes you're allowed to make (5 per month). Apparently the dispatch queue was not so full because I idled for once or twice.</p>
+<p>I soon lost my interest in this game and turned to look at the navigation bar. I saw several tabs, among which was "payment". Also there's a "score board"-ish tab. I also given that account to my friend. She kind of found it interesting and looked at it as a game. However, I would doubt if anyone who wants to make money from it enjoys this as much as my friend did. When I got that account back, the system refreshed my payment. I could see that my friend and I entered 26 entries and made $0.013. Well, that's only $0.005 per entry!</p>
+<p>I had a look at the "score board". Top 1 worker made ~$180 last month, while number 100 made ~$42.</p>
+<p>After playing with the system and seeing the "score board", I had the impression that this is not an appealing job for me. I mean, even if someone is in desperate need of money, he or she should not consider doing this, because I don't see possible way to make any money out of it.</p>
+<p>Surely I don't know enough about other Asian countries, I don't really have an idea what their life standard is like. So probably for those countries high on the list, their workers can actually make profit from this job. As for USA workers, I have a theory that they might be homeless with laptop, and have access to free electricity and free wifi -- I've seen report on this lifestyle, they get free laptop from recycling station / donation and free electricity / wifi from McDonald. To be honest, the life standard of USA homeless is quite high compared to other countries, so that they can probably use this system to earn themselves a cup of coffee when they have nothing else to do. But I don't think those USA workers rely on this system to make a living by any means. For the developing countries, the device required to go into this job, the Internet connection and the electricity are not free (not saying that there's no free ride at all, just not as easy to get as in the US).</p>
+<p>Wearing my Chinese hat on, I can say more specific thing. Say I'm a guy from a very small town (by Chinese standard of course) and want to go into this job, I will first need a computer, which needs to be at the very least able to run an graphical desktop environment and a web browser. That will probably cost me 500 Yuan (~$80) if I buy a very very very old second hand computer. Then the Internet connection will probably cost me 30 Yuan (~$5) per month. Assume the power of my computer 200W, working 8 hours per day, unit price per watt 0.6 Yuan (~$0.1), that makes the electricity bill ~1 Yuan (~$0.16) per day. To cover the electricity bill alone, I will need to enter 160 entries. To cover the Internet fee I will need to enter 50000 entries. So, just to cover regular expenses, I will need to enter 5000 + 160 * 30 = 9800 entries (30 is the number of working days, and yes, I consider myself workaholic). To get back my investment on computer I will need to enter another 80000 entries. After all that, I get a job with hourly rate of 2.27 Yuan ($0.36), which is can barely feed myself given the current household level in my hometown. But of course, if I really have nothing else to do, this job is still something to get myself occupied -- any income is better than no income.</p>
+<p>In conclusion, I don't think as a worker it is worthy at all to do this job. However this kind of service exists, however small it is (the said service provider has 1000 workers top). I don't understand why. Probably there's poverty that's way beyond my understanding, probably workers never take on it as sole income source. I would put my bet on the latter.</p>
+			
+			<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+						
+			
+		</div>
+	
+<div class="meta wrapper">
+	<time datetime="2014-05-17T10:50:00" pubdate>Sat 17 May 2014</time>
+	<ul class="tag clearfix">
+		<li><a href="http://blog.liuw.name/category/misc.html">Misc</a></li>
+	</ul>
+</div>	</article>	
+</div>
+	
+		
+<footer class="clearfix">
+	<div class="wrapper pages">
+		<ul class="nav">
+			<li><a href="http://blog.liuw.name/pages/about.html">About</a></li>
+			<li><a href="http://blog.liuw.name/archives.html">Archive</a></li>
+		</ul>
+	</div>
+	
+	<div class="copy wrapper">
+		<ul class="social">
+		</ul>
+	
+		<p role="contentinfo">© 2012-2014 Wei Liu<br>
+		Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">Pelican</a>.</p>
+	</div>
+</footer>
+	
+	<script>
+	  var _gaq=[['_setAccount',''],['_trackPageview']];
+	  (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+	  g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+	  s.parentNode.insertBefore(g,s)}(document,'script'));
+	</script>
+</body>
+</html>
