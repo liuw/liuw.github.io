@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Liuw's Thinkpad</title><link href="http://blog.liuw.name/" rel="alternate"></link><link href="http://blog.liuw.name/feeds/functional-programming.atom.xml" rel="self"></link><id>http://blog.liuw.name/</id><updated>2014-08-12T23:10:00+01:00</updated><entry><title>Clock is monoid</title><link href="http://blog.liuw.name/clock-is-monoid.html" rel="alternate"></link><updated>2014-08-12T23:10:00+01:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2014-08-12:clock-is-monoid.html</id><summary type="html">&lt;p&gt;I bumped into "functional programming" several times during my years in college
+and now I'm planning to spend serious effort in learning it. My language of
+choice, after evaluating several, is Haskell.&lt;/p&gt;
+&lt;p&gt;But this post is not about Haskell. I mentioned Haskell because I encountered
+many mathmatical concepts when learning, such as functor, moinoid and monad.
+They are a bit far-fetched for me because I have a background of low level
+programming.&lt;/p&gt;
+&lt;p&gt;Recently I came across a video on Youtube, in which monoid is not depicted as
+pure mathmatical but something we know everyday. The clock we see everywhere is
+actually an instance of monoid.&lt;/p&gt;
+&lt;p&gt;For S with some binary operation 'dot' which maps S x S -&amp;gt; S to be a monoid, it
+has to sastify two axioms:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;For all a, b and c in S, (a 'dot' b) 'dot' c = a 'dot' (b 'dot' c)&lt;/li&gt;
+&lt;li&gt;There exists identity element u that every elements a in set S a 'dot' u = u
+  'dot' a = a&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For a clock, the identity element is 12 and 'dot' can be defined as
+'dot' a b = (a + b) % 12. &lt;/p&gt;
+&lt;p&gt;Pretty neat, isn't it?&lt;/p&gt;
+&lt;p&gt;There's a lot of other information in that video. The discussion on
+composibility is quite delightful as well.&lt;/p&gt;
+&lt;p&gt;And here is the link.&lt;/p&gt;
+&lt;p&gt;https://www.youtube.com/watch?v=ZhuHCtR3xq8&lt;/p&gt;</summary></entry></feed>

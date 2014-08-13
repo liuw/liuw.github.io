@@ -2,7 +2,7 @@
 <html lang="">	
 <head>
 	<meta charset="utf-8"/>
-	<title>Liuw's Thinkpad</title>	
+	<title>Clock is monoid - Liuw's Thinkpad</title>	
 	<meta name="author" content="Wei Liu">
 	
 	<meta name="HandheldFriendly" content="True">
@@ -28,32 +28,47 @@
 		</div>
 	</header>
 	
-<div role="main" class="content clearfix">
-
-	<article class="wrapper main">
-		<h1><a href="http://blog.liuw.name/clock-is-monoid.html">Clock is monoid</a></h1>
-		<p>I bumped into "functional programming" several times during my years in college
+<div role="main" class="content clearfix">	
+	<article>
+		<div class="post wrapper">
+			<h1>Clock is monoid</h1>
+			<p>I bumped into "functional programming" several times during my years in college
 and now I'm planning to spend serious effort in learning it. My language of
 choice, after evaluating several, is Haskell.</p>
 <p>But this post is not about Haskell. I mentioned Haskell because I encountered
-many mathmatical concepts when ...</p> <a class="btn" href="http://blog.liuw.name/clock-is-monoid.html">read more →</a>
-	</article>
-
-	<div class="wrapper main">		
-		<h3>More posts</h3>
-		<ol class="archive">
-
-			<li class="clearfix"><a href="http://blog.liuw.name/the-captcha-economy.html" rel="bookmark" title="Permalink to The CAPTCHA Economy"><time datetime="2014-05-17T10:50:00" pubdate>Sat 17 May 2014</time> The CAPTCHA Economy</a></li>
-
-			<li class="clearfix"><a href="http://blog.liuw.name/two-years-as-open-source-software-developer-retrospect-and-forward-looking.html" rel="bookmark" title="Permalink to Two Years as Open Source Software Developer, Retrospect and Forward-looking"><time datetime="2014-05-05T19:18:00" pubdate>Mon 05 May 2014</time> Two Years as Open Source Software Developer, Retrospect and Forward-looking</a></li>
-
-			<li class="clearfix"><a href="http://blog.liuw.name/fix-debian-wheezys-openswan-regression-with-apple-devices.html" rel="bookmark" title="Permalink to Fix Debian Wheezy's Openswan Regression with Apple Devices"><time datetime="2014-05-04T23:40:00" pubdate>Sun 04 May 2014</time> Fix Debian Wheezy's Openswan Regression with Apple Devices</a></li>
-
-			<li class="clearfix"><a href="http://blog.liuw.name/2012-year-end-review.html" rel="bookmark" title="Permalink to 2012年终总结"><time datetime="2012-12-28T20:40:00" pubdate>Fri 28 December 2012</time> 2012年终总结</a></li>
-		</ol>
-		
-		<p>More posts in the <a href="http://blog.liuw.name/archives.html">archive</a>.</p>
-	</div>
+many mathmatical concepts when learning, such as functor, moinoid and monad.
+They are a bit far-fetched for me because I have a background of low level
+programming.</p>
+<p>Recently I came across a video on Youtube, in which monoid is not depicted as
+pure mathmatical but something we know everyday. The clock we see everywhere is
+actually an instance of monoid.</p>
+<p>For S with some binary operation 'dot' which maps S x S -&gt; S to be a monoid, it
+has to sastify two axioms:</p>
+<ul>
+<li>For all a, b and c in S, (a 'dot' b) 'dot' c = a 'dot' (b 'dot' c)</li>
+<li>There exists identity element u that every elements a in set S a 'dot' u = u
+  'dot' a = a</li>
+</ul>
+<p>For a clock, the identity element is 12 and 'dot' can be defined as
+'dot' a b = (a + b) % 12. </p>
+<p>Pretty neat, isn't it?</p>
+<p>There's a lot of other information in that video. The discussion on
+composibility is quite delightful as well.</p>
+<p>And here is the link.</p>
+<p>https://www.youtube.com/watch?v=ZhuHCtR3xq8</p>
+			
+			<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+						
+			
+		</div>
+	
+<div class="meta wrapper">
+	<time datetime="2014-08-12T23:10:00" pubdate>Tue 12 August 2014</time>
+	<ul class="tag clearfix">
+		<li><a href="http://blog.liuw.name/category/functional-programming.html">Functional Programming</a></li>
+	</ul>
+</div>	</article>	
 </div>
 	
 		
