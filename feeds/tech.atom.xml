@@ -1,5 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Liuw's Thinkpad</title><link href="http://blog.liuw.name/" rel="alternate"></link><link href="http://blog.liuw.name/feeds/tech.atom.xml" rel="self"></link><id>http://blog.liuw.name/</id><updated>2014-05-05T19:18:00+01:00</updated><entry><title>Two Years as Open Source Software Developer, Retrospect and Forward-looking</title><link href="http://blog.liuw.name/two-years-as-open-source-software-developer-retrospect-and-forward-looking.html" rel="alternate"></link><updated>2014-05-05T19:18:00+01:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2014-05-05:two-years-as-open-source-software-developer-retrospect-and-forward-looking.html</id><summary type="html">&lt;p&gt;I've been a developer for open source
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Liuw's Thinkpad</title><link href="http://blog.liuw.name/" rel="alternate"></link><link href="http://blog.liuw.name/feeds/tech.atom.xml" rel="self"></link><id>http://blog.liuw.name/</id><updated>2014-08-29T15:03:00+01:00</updated><entry><title>Anatomy of Xen Alternative Infrastructure</title><link href="http://blog.liuw.name/anatomy-of-xen-alternative-infrastructure.html" rel="alternate"></link><updated>2014-08-29T15:03:00+01:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2014-08-29:anatomy-of-xen-alternative-infrastructure.html</id><summary type="html">&lt;p&gt;Frankly speaking I think the name "alternative" is a bit unclear to
+outsider. It's used to patch kernel raw machine code during
+runtime. Why is it useful? It gives you a chance to selectively patch
+machine code according to CPU features and vendors.&lt;/p&gt;
+&lt;p&gt;Xen borrows a stripped down version of alternative infrastructure from
+Linux kernel. It's more concise and easier to understand, because Xen
+applies alternative instructions before SMP initialisation and it
+doesn't support altering instructions after everything else is up and
+running. The implementation in Linux is more complex as it has more
+functionalities. The core principle remains the same in Xen, however.&lt;/p&gt;
+&lt;p&gt;This infrastructure is only used in x86 architecture at the moment so
+files are placed under x86 folders. There are only two files,
+xen/arch/x86/alternative.c and xen/include/asm-x86/alternative.h.&lt;/p&gt;
+&lt;p&gt;Let's look at the header file first.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="n"&gt;alt_instr&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;s32&lt;/span&gt; &lt;span class="n"&gt;instr_offset&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;       &lt;span class="cm"&gt;/* original instruction */&lt;/span&gt;
+    &lt;span class="n"&gt;s32&lt;/span&gt; &lt;span class="n"&gt;repl_offset&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;        &lt;span class="cm"&gt;/* offset to replacement instruction */&lt;/span&gt;
+    &lt;span class="n"&gt;u16&lt;/span&gt; &lt;span class="n"&gt;cpuid&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;              &lt;span class="cm"&gt;/* cpuid bit set for replacement */&lt;/span&gt;
+    &lt;span class="n"&gt;u8&lt;/span&gt;  &lt;span class="n"&gt;instrlen&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;           &lt;span class="cm"&gt;/* length of original instruction */&lt;/span&gt;
+    &lt;span class="n"&gt;u8&lt;/span&gt;  &lt;span class="n"&gt;replacementlen&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;     &lt;span class="cm"&gt;/* length of new instruction, &amp;lt;= instrlen */&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt;
+
+&lt;span class="cp"&gt;#define OLDINSTR(oldinstr)      &amp;quot;661:\n\t&amp;quot; oldinstr &amp;quot;\n662:\n&amp;quot;&lt;/span&gt;
+
+&lt;span class="cp"&gt;#define b_replacement(number)   &amp;quot;663&amp;quot;#number&lt;/span&gt;
+&lt;span class="cp"&gt;#define e_replacement(number)   &amp;quot;664&amp;quot;#number&lt;/span&gt;
+
+&lt;span class="cp"&gt;#define alt_slen &amp;quot;662b-661b&amp;quot;&lt;/span&gt;
+&lt;span class="cp"&gt;#define alt_rlen(number) e_replacement(number)&amp;quot;f-&amp;quot;b_replacement(number)&amp;quot;f&amp;quot;&lt;/span&gt;
+
+&lt;span class="cp"&gt;#define ALTINSTR_ENTRY(feature, number)                                       \&lt;/span&gt;
+&lt;span class="cp"&gt;        &amp;quot; .long 661b - .\n&amp;quot;                             &lt;/span&gt;&lt;span class="cm"&gt;/* label           */&lt;/span&gt;&lt;span class="cp"&gt; \&lt;/span&gt;
+&lt;span class="cp"&gt;        &amp;quot; .long &amp;quot; b_replacement(number)&amp;quot;f - .\n&amp;quot;        &lt;/span&gt;&lt;span class="cm"&gt;/* new instruction */&lt;/span&gt;&lt;span class="cp"&gt; \&lt;/span&gt;
+&lt;span class="cp"&gt;        &amp;quot; .word &amp;quot; __stringify(feature) &amp;quot;\n&amp;quot;             &lt;/span&gt;&lt;span class="cm"&gt;/* feature bit     */&lt;/span&gt;&lt;span class="cp"&gt; \&lt;/span&gt;
+&lt;span class="cp"&gt;        &amp;quot; .byte &amp;quot; alt_slen &amp;quot;\n&amp;quot;                         &lt;/span&gt;&lt;span class="cm"&gt;/* source len      */&lt;/span&gt;&lt;span class="cp"&gt; \&lt;/span&gt;
+&lt;span class="cp"&gt;        &amp;quot; .byte &amp;quot; alt_rlen(number) &amp;quot;\n&amp;quot;                 &lt;/span&gt;&lt;span class="cm"&gt;/* replacement len */&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
+
+&lt;span class="cp"&gt;#define DISCARD_ENTRY(number)                           &lt;/span&gt;&lt;span class="cm"&gt;/* rlen &amp;lt;= slen */&lt;/span&gt;&lt;span class="cp"&gt;    \&lt;/span&gt;
+&lt;span class="cp"&gt;        &amp;quot; .byte 0xff + (&amp;quot; alt_rlen(number) &amp;quot;) - (&amp;quot; alt_slen &amp;quot;)\n&amp;quot;&lt;/span&gt;
+
+&lt;span class="cp"&gt;#define ALTINSTR_REPLACEMENT(newinstr, feature, number) &lt;/span&gt;&lt;span class="cm"&gt;/* replacement */&lt;/span&gt;&lt;span class="cp"&gt;     \&lt;/span&gt;
+&lt;span class="cp"&gt;        b_replacement(number)&amp;quot;:\n\t&amp;quot; newinstr &amp;quot;\n&amp;quot; e_replacement(number) &amp;quot;:\n\t&amp;quot;&lt;/span&gt;
+
+&lt;span class="cm"&gt;/* alternative assembly primitive: */&lt;/span&gt;
+&lt;span class="cp"&gt;#define ALTERNATIVE(oldinstr, newinstr, feature)                        \&lt;/span&gt;
+&lt;span class="cp"&gt;        OLDINSTR(oldinstr)                                              \&lt;/span&gt;
+&lt;span class="cp"&gt;        &amp;quot;.pushsection .altinstructions,\&amp;quot;a\&amp;quot;\n&amp;quot;                         \&lt;/span&gt;
+&lt;span class="cp"&gt;        ALTINSTR_ENTRY(feature, 1)                                      \&lt;/span&gt;
+&lt;span class="cp"&gt;        &amp;quot;.popsection\n&amp;quot;                                                 \&lt;/span&gt;
+&lt;span class="cp"&gt;        &amp;quot;.pushsection .discard,\&amp;quot;aw\&amp;quot;,@progbits\n&amp;quot;                      \&lt;/span&gt;
+&lt;span class="cp"&gt;        DISCARD_ENTRY(1)                                                \&lt;/span&gt;
+&lt;span class="cp"&gt;        &amp;quot;.popsection\n&amp;quot;                                                 \&lt;/span&gt;
+&lt;span class="cp"&gt;        &amp;quot;.pushsection .altinstr_replacement, \&amp;quot;ax\&amp;quot;\n&amp;quot;                  \&lt;/span&gt;
+&lt;span class="cp"&gt;        ALTINSTR_REPLACEMENT(newinstr, feature, 1)                      \&lt;/span&gt;
+&lt;span class="cp"&gt;        &amp;quot;.popsection&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;ALTINSTR_ENTRY is the equivelant of struct alt_instr in assembly.&lt;/p&gt;
+&lt;p&gt;For example, stac and clac are defined using alternative mechanism.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="n"&gt;always_inline&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;clac&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="cm"&gt;/* Note: a barrier is implicit in alternative() */&lt;/span&gt;
+    &lt;span class="n"&gt;alternative&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ASM_NOP3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;___stringify&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__ASM_CLAC&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;X86_FEATURE_SMAP&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;em&gt;alternative&lt;/em&gt; is a wrapper of ALTERNATIVE. So in effect this inline
+function defines 3 NOPs first, because machine code of clac is 3 bytes
+long. Then an alternative instruction entry is created in
+.altinstructions section. A discard entry created in .discard
+section. Finally the alternative instructions used to replace the
+original ones are stored in .altinstr_replacement section.&lt;/p&gt;
+&lt;p&gt;To extend this snippet into assembly code.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;asm&lt;/span&gt; &lt;span class="nf"&gt;volatile&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ALTERNATIVE&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ASM_NOP3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;__stringify&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__ASM_CLAC&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;X86_FEATURE_SMAP&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;memory&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="n"&gt;asm&lt;/span&gt; &lt;span class="k"&gt;volatile&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;661:&lt;/span&gt;&lt;span class="se"&gt;\n\t&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;ASM_NOP3&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;662:&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;
+
+    &lt;span class="s"&gt;&amp;quot;.pushsection .altinstructions,&lt;/span&gt;&lt;span class="se"&gt;\&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;a&lt;/span&gt;&lt;span class="se"&gt;\&amp;quot;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;                         \
+    &lt;span class="s"&gt;&amp;quot; .long 661b - .&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;                             &lt;span class="cm"&gt;/* label           */&lt;/span&gt; \
+    &lt;span class="s"&gt;&amp;quot; .long 6631f - .&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;        &lt;span class="cm"&gt;/* new instruction */&lt;/span&gt; \
+    &lt;span class="s"&gt;&amp;quot; .word &amp;quot;&lt;/span&gt; &lt;span class="n"&gt;__stringify&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;X86_FEATURE_SMAP&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;             &lt;span class="cm"&gt;/* feature bit     */&lt;/span&gt; \
+    &lt;span class="s"&gt;&amp;quot; .byte 662b - 661b&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;                         &lt;span class="cm"&gt;/* source len      */&lt;/span&gt; \
+    &lt;span class="s"&gt;&amp;quot; .byte 6641f - 6631f&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;                 &lt;span class="cm"&gt;/* replacement len */&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;.popsection&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;                                                 \
+
+    &lt;span class="s"&gt;&amp;quot;.pushsection .discard,&lt;/span&gt;&lt;span class="se"&gt;\&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;aw&lt;/span&gt;&lt;span class="se"&gt;\&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;,@progbits&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;                      \
+    &lt;span class="s"&gt;&amp;quot; .byte 0xff + (6641f - 6631f) - (662b - 661b)&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;.popsection&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;                                                 \
+
+    &lt;span class="s"&gt;&amp;quot;.pushsection .altinstr_replacement, &lt;/span&gt;&lt;span class="se"&gt;\&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;ax&lt;/span&gt;&lt;span class="se"&gt;\&amp;quot;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;                  \
+    &lt;span class="s"&gt;&amp;quot;6631:&lt;/span&gt;&lt;span class="se"&gt;\n\t&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;__stringify&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__ASM_CLAC&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;6641:&lt;/span&gt;&lt;span class="se"&gt;\n\t&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;   
+    &lt;span class="s"&gt;&amp;quot;.popsection&amp;quot;&lt;/span&gt;
+
+&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;memory&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;When Xen boots up, it iterates through .altinstructions sections,
+picks up each entry and patches call sites if the required feature bit
+is met. See alternative.c:apply_alternatives. If the required feature
+is not available, those instructions remain NOPs.&lt;/p&gt;
+&lt;p&gt;If you inspect the object file that contains functions that are
+implemented with alternative mechanism (for example, usercopy.c calls
+stac and clac), you can see:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;objdump&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt; &lt;span class="n"&gt;xen&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;arch&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;x86&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usercopy&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;o&lt;/span&gt;
+&lt;span class="n"&gt;xen&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;arch&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;x86&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usercopy&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;o&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;     &lt;span class="n"&gt;file&lt;/span&gt; &lt;span class="n"&gt;format&lt;/span&gt; &lt;span class="n"&gt;elf64&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;x86&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;64&lt;/span&gt;
+
+&lt;span class="nl"&gt;Sections:&lt;/span&gt;
+&lt;span class="n"&gt;Idx&lt;/span&gt; &lt;span class="n"&gt;Name&lt;/span&gt;          &lt;span class="n"&gt;Size&lt;/span&gt;      &lt;span class="n"&gt;VMA&lt;/span&gt;               &lt;span class="n"&gt;LMA&lt;/span&gt;               &lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="n"&gt;off&lt;/span&gt;  &lt;span class="n"&gt;Algn&lt;/span&gt;
+ &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;         &lt;span class="mf"&gt;000001e9&lt;/span&gt;  &lt;span class="mo"&gt;0000000000000000&lt;/span&gt;  &lt;span class="mo"&gt;0000000000000000&lt;/span&gt;  &lt;span class="mo"&gt;00000040&lt;/span&gt;  &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;
+                 &lt;span class="n"&gt;CONTENTS&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ALLOC&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;LOAD&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;RELOC&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;READONLY&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;CODE&lt;/span&gt;
+ &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;         &lt;span class="mo"&gt;00000000&lt;/span&gt;  &lt;span class="mo"&gt;0000000000000000&lt;/span&gt;  &lt;span class="mo"&gt;0000000000000000&lt;/span&gt;  &lt;span class="mo"&gt;0000022&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;  &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;
+                 &lt;span class="n"&gt;CONTENTS&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ALLOC&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;LOAD&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;DATA&lt;/span&gt;
+ &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bss&lt;/span&gt;          &lt;span class="mo"&gt;00000000&lt;/span&gt;  &lt;span class="mo"&gt;0000000000000000&lt;/span&gt;  &lt;span class="mo"&gt;0000000000000000&lt;/span&gt;  &lt;span class="mo"&gt;0000022&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;  &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;
+                 &lt;span class="n"&gt;ALLOC&lt;/span&gt;
+ &lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;altinstructions&lt;/span&gt; &lt;span class="mo"&gt;0000004&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;  &lt;span class="mo"&gt;0000000000000000&lt;/span&gt;  &lt;span class="mo"&gt;0000000000000000&lt;/span&gt;  &lt;span class="mo"&gt;0000022&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;  &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;
+                 &lt;span class="n"&gt;CONTENTS&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ALLOC&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;LOAD&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;RELOC&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;READONLY&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;DATA&lt;/span&gt;
+ &lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;discard&lt;/span&gt;      &lt;span class="mo"&gt;00000006&lt;/span&gt;  &lt;span class="mo"&gt;0000000000000000&lt;/span&gt;  &lt;span class="mo"&gt;0000000000000000&lt;/span&gt;  &lt;span class="mo"&gt;00000274&lt;/span&gt;  &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;
+                 &lt;span class="n"&gt;CONTENTS&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ALLOC&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;LOAD&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;DATA&lt;/span&gt;
+ &lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;altinstr_replacement&lt;/span&gt; &lt;span class="mo"&gt;00000012&lt;/span&gt;  &lt;span class="mo"&gt;0000000000000000&lt;/span&gt;  &lt;span class="mo"&gt;0000000000000000&lt;/span&gt;  &lt;span class="mo"&gt;0000027&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;  &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;
+                 &lt;span class="n"&gt;CONTENTS&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ALLOC&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;LOAD&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;READONLY&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;CODE&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Disassembling .altinstr_replacement section yields:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;objdump&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;altinstr_replacement&lt;/span&gt; &lt;span class="n"&gt;xen&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;arch&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;x86&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usercopy&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;o&lt;/span&gt;
+
+&lt;span class="n"&gt;xen&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;arch&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;x86&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usercopy&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;o&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;     &lt;span class="n"&gt;file&lt;/span&gt; &lt;span class="n"&gt;format&lt;/span&gt; &lt;span class="n"&gt;elf64&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;x86&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;64&lt;/span&gt;
+
+&lt;span class="n"&gt;Disassembly&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;section&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;altinstr_replacement&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+
+&lt;span class="mo"&gt;0000000000000000&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;altinstr_replacement&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;:&lt;/span&gt;
+   &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;   &lt;span class="mf"&gt;0f&lt;/span&gt; &lt;span class="mo"&gt;01&lt;/span&gt;                   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bad&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+   &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;   &lt;span class="n"&gt;cb&lt;/span&gt;                      &lt;span class="n"&gt;lret&lt;/span&gt;
+   &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;   &lt;span class="mf"&gt;0f&lt;/span&gt; &lt;span class="mo"&gt;01&lt;/span&gt;                   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bad&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+   &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;   &lt;span class="n"&gt;ca&lt;/span&gt; &lt;span class="mf"&gt;0f&lt;/span&gt; &lt;span class="mo"&gt;01&lt;/span&gt;                &lt;span class="n"&gt;lret&lt;/span&gt;   &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="mh"&gt;0x10f&lt;/span&gt;
+   &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;   &lt;span class="n"&gt;cb&lt;/span&gt;                      &lt;span class="n"&gt;lret&lt;/span&gt;
+   &lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;   &lt;span class="mf"&gt;0f&lt;/span&gt; &lt;span class="mo"&gt;01&lt;/span&gt;                   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bad&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+   &lt;span class="nl"&gt;b:&lt;/span&gt;   &lt;span class="n"&gt;ca&lt;/span&gt; &lt;span class="mf"&gt;0f&lt;/span&gt; &lt;span class="mo"&gt;01&lt;/span&gt;                &lt;span class="n"&gt;lret&lt;/span&gt;   &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="mh"&gt;0x10f&lt;/span&gt;
+   &lt;span class="nl"&gt;e:&lt;/span&gt;   &lt;span class="n"&gt;cb&lt;/span&gt;                      &lt;span class="n"&gt;lret&lt;/span&gt;
+   &lt;span class="nl"&gt;f:&lt;/span&gt;   &lt;span class="mf"&gt;0f&lt;/span&gt; &lt;span class="mo"&gt;01&lt;/span&gt;                   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bad&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;   &lt;span class="n"&gt;ca&lt;/span&gt;                      &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;byte&lt;/span&gt; &lt;span class="mh"&gt;0xca&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;0f 01 ca and 0f 01 cb are machine code for clac and stac.&lt;/p&gt;
+&lt;p&gt;Use gdb to look at call site of stac:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;$&lt;/span&gt; &lt;span class="nx"&gt;gdb&lt;/span&gt; &lt;span class="nx"&gt;xen&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;arch&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;x86&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;usercopy&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;o&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;gdb&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nx"&gt;disas&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;r&lt;/span&gt; &lt;span class="nx"&gt;__copy_from_user_ll&lt;/span&gt;
+&lt;span class="nx"&gt;Dump&lt;/span&gt; &lt;span class="nx"&gt;of&lt;/span&gt; &lt;span class="nx"&gt;assembler&lt;/span&gt; &lt;span class="nx"&gt;code&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;__copy_from_user_ll&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+   &lt;span class="mh"&gt;0x000000000000003c&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;+&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;:&lt;/span&gt; &lt;span class="mi"&gt;55&lt;/span&gt;  &lt;span class="nx"&gt;push&lt;/span&gt;   &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="nx"&gt;rbp&lt;/span&gt;
+   &lt;span class="mh"&gt;0x000000000000003d&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;:&lt;/span&gt; &lt;span class="mi"&gt;48&lt;/span&gt; &lt;span class="mi"&gt;89&lt;/span&gt; &lt;span class="nx"&gt;e5&lt;/span&gt;    &lt;span class="nx"&gt;mov&lt;/span&gt;    &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="nx"&gt;rsp&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="nx"&gt;rbp&lt;/span&gt;
+   &lt;span class="mh"&gt;0x0000000000000040&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;+&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;:&lt;/span&gt; &lt;span class="mi"&gt;89&lt;/span&gt; &lt;span class="nx"&gt;d1&lt;/span&gt;   &lt;span class="nx"&gt;mov&lt;/span&gt;    &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="nx"&gt;edx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="nx"&gt;ecx&lt;/span&gt;
+   &lt;span class="mh"&gt;0x0000000000000042&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;+&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;:&lt;/span&gt; &lt;span class="mi"&gt;66&lt;/span&gt; &lt;span class="mi"&gt;66&lt;/span&gt; &lt;span class="mi"&gt;90&lt;/span&gt;    &lt;span class="nx"&gt;data32&lt;/span&gt; &lt;span class="nx"&gt;xchg&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="nx"&gt;ax&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="nx"&gt;ax&lt;/span&gt;
+   &lt;span class="mh"&gt;0x0000000000000045&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;+&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;:&lt;/span&gt; &lt;span class="mi"&gt;48&lt;/span&gt; &lt;span class="mi"&gt;89&lt;/span&gt; &lt;span class="nx"&gt;c8&lt;/span&gt;    &lt;span class="nx"&gt;mov&lt;/span&gt;    &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="nx"&gt;rcx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="nx"&gt;rax&lt;/span&gt;
+   &lt;span class="mh"&gt;0x0000000000000048&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;+&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;:&lt;/span&gt;    &lt;span class="mi"&gt;48&lt;/span&gt; &lt;span class="mi"&gt;83&lt;/span&gt; &lt;span class="nx"&gt;f9&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="nx"&gt;f&lt;/span&gt; &lt;span class="nx"&gt;cmp&lt;/span&gt;    &lt;span class="nx"&gt;$0xf&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="nx"&gt;rcx&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The line 66 66 90 is in fact ASM_NOP3 if you look at its definition.&lt;/p&gt;
+&lt;p&gt;If the requested feature is not present, ASM_NOP3 remains
+untouched. Otherwise it's replaced with 0f 01 cb.&lt;/p&gt;
+&lt;p&gt;The patching procedure can be seen in alternative.c. It's quite
+straightforward -- just plain memcpy.&lt;/p&gt;
+&lt;p&gt;This is it. This post mainly targets beginners who are interested in
+tricks in low level programming. It does requires certain level of
+understanding of the tools though. Fortunately the manuals of those
+tools are excellent so I won't go into details on how to use those
+tools.&lt;/p&gt;</summary></entry><entry><title>Two Years as Open Source Software Developer, Retrospect and Forward-looking</title><link href="http://blog.liuw.name/two-years-as-open-source-software-developer-retrospect-and-forward-looking.html" rel="alternate"></link><updated>2014-05-05T19:18:00+01:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2014-05-05:two-years-as-open-source-software-developer-retrospect-and-forward-looking.html</id><summary type="html">&lt;p&gt;I've been a developer for open source
 &lt;a href="http://www.xenproject.org"&gt;Xen Project&lt;/a&gt; for two years, and I also
 help develop &lt;a href="http://github.com/pythoncn/june"&gt;June&lt;/a&gt; in my spare
 time. What I've learned so far is that running a (proper) open source
