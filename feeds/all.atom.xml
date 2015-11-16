@@ -1,5 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Liuw's Thinkpad</title><link href="http://blog.liuw.name/" rel="alternate"></link><link href="http://blog.liuw.name/feeds/all.atom.xml" rel="self"></link><id>http://blog.liuw.name/</id><updated>2015-11-01T14:50:00+00:00</updated><entry><title>Of Course Joanna is Right</title><link href="http://blog.liuw.name/of-course-joanna-is-right.html" rel="alternate"></link><updated>2015-11-01T14:50:00+00:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2015-11-01:of-course-joanna-is-right.html</id><summary type="html">&lt;p&gt;There have been quite a lot of Xen-bashing for XSA-148. It's no doubt a cluster-fuck, a reflection of the sad state of the art of computer system security. &lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Liuw's Thinkpad</title><link href="http://blog.liuw.name/" rel="alternate"></link><link href="http://blog.liuw.name/feeds/all.atom.xml" rel="self"></link><id>http://blog.liuw.name/</id><updated>2015-11-16T22:30:00+00:00</updated><entry><title>Free Software is not Free</title><link href="http://blog.liuw.name/free-software-is-not-free.html" rel="alternate"></link><updated>2015-11-16T22:30:00+00:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2015-11-16:free-software-is-not-free.html</id><summary type="html">&lt;p&gt;There has been some back and forth discussion on how Xen's security process
+sucks. Well, not quite. Though the email was titled that way, the content
+didn't have much to do with security process per se. True, there are
+technically correct points in that thread (with which I completely agree), but
+the underlying theme is disturbing. That thread prompted me into thinking how
+open source project functions. What I'm going to dwell on is not Xen project
+specific.&lt;/p&gt;
+&lt;p&gt;All in all, there are people that don't want to invest time and money into an
+open source project but want undue influence. The cold hard fact is that things
+just don't work that way. Making a piece of software requires a lot of work.
+Whatever great idea floating around needs to be implemented by an actual person
+-- that comes down to time and money.&lt;/p&gt;
+&lt;p&gt;So while open source projects are often branded as "free" (as in either free
+speech or free beer), the work behind them is not.  Open source world nowadays
+function differently than 20 years ago. It has developed into a business model
+that every major project has some vested interest of some companies. Their
+employees act in the interest of the employers and prioritise work items
+accordingly. There are hobbyists working on a project but it's hard for them to
+make substantive contributions.&lt;/p&gt;
+&lt;p&gt;People have expectation that, since open source project is "free", they are
+entitled to add more work items even if they don't want to invest time and
+money. This is fundamentally wrong. Well, they are "free" to voice their
+opinions, but then developers are "free" to ignore part of or all of those
+opinions. The door is always open for collaborations though -- everybody is
+"free" to join.&lt;/p&gt;
+&lt;p&gt;In a proprietary software world, there is normally no public channel to ask for
+changes. But I'm pretty sure it all comes down to support contract or whatnot.
+I can't imagine someone out of the blue goes to Microsoft and says "the way you
+work is wrong, your priority is wrong, let me tell you what to do, but I don't
+want to pay you anything".&lt;/p&gt;
+&lt;p&gt;And I have to admit I sometimes feel upset for such attitude and entitlement.
+The joy of working on open source project is ruined. Not respecting the effort
+other people put into the project is just demotivating. And I'm not only
+talking about myself or Xen project specifically. There have been several
+instances of developer burnout. Many people also wrote essays on similar
+subjects.&lt;/p&gt;
+&lt;p&gt;In my humble opinion, free software projects are just not "free" as some people
+would like them to be. Ultimately, a free software project is what the whole
+community makes it.  If one disagrees on the direction of a project, he or she
+should join and lead the change for the better.&lt;/p&gt;</summary></entry><entry><title>Of Course Joanna is Right</title><link href="http://blog.liuw.name/of-course-joanna-is-right.html" rel="alternate"></link><updated>2015-11-01T14:50:00+00:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2015-11-01:of-course-joanna-is-right.html</id><summary type="html">&lt;p&gt;There have been quite a lot of Xen-bashing for XSA-148. It's no doubt a cluster-fuck, a reflection of the sad state of the art of computer system security. &lt;/p&gt;
 &lt;p&gt;As Ian pointed out in his blog post, we collectively choose features over security. Security only matters when there is a big fuck-up like HeartBleed, ShellShock or XSA-148.&lt;/p&gt;
 &lt;p&gt;What is even sadder is the attitude of media in general. Journalists actively hunt for headline-worth bugs. With the help of slightly technically incorrect writing that skews the true situation and some other implications along the way, they have many masterpieces that conclude the dismal state of computer system security. Not that they're wrong about the conclusion, just in my opinion they completely miss the important points. Remember VENOM? I didn't mention it in my list of big fuck-ups because it really wasn't anything serious except for its cool name. But media picked on that and started a spree nonetheless, just because the cool name fit right in their headline.&lt;/p&gt;
 &lt;p&gt;So what's wrong with the world? In short, we really really really don't care about security. The effort of a small group of people pales in front of the a world that cares more about cool new shiny things.&lt;/p&gt;
