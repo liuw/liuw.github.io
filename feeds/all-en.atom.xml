@@ -1,5 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Liuw's Thinkpad</title><link href="http://blog.liuw.name/" rel="alternate"></link><link href="http://blog.liuw.name/feeds/all-en.atom.xml" rel="self"></link><id>http://blog.liuw.name/</id><updated>2015-11-16T22:30:00+00:00</updated><entry><title>Free Software is not Free</title><link href="http://blog.liuw.name/free-software-is-not-free.html" rel="alternate"></link><updated>2015-11-16T22:30:00+00:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2015-11-16:free-software-is-not-free.html</id><summary type="html">&lt;p&gt;There has been some back and forth discussion on how Xen's security process
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Liuw's Thinkpad</title><link href="http://blog.liuw.name/" rel="alternate"></link><link href="http://blog.liuw.name/feeds/all-en.atom.xml" rel="self"></link><id>http://blog.liuw.name/</id><updated>2015-11-23T23:49:00+00:00</updated><entry><title>Securing My Pet VMs</title><link href="http://blog.liuw.name/securing-my-pet-vms.html" rel="alternate"></link><updated>2015-11-23T23:49:00+00:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2015-11-23:securing-my-pet-vms.html</id><summary type="html">&lt;p&gt;I have a number of (0 to 3, depending on conditions) pet VMs running
+somewhere in the "cloud".&lt;/p&gt;
+&lt;p&gt;I don't want to become a 24x7 system administrator myself. I have far
+more important things to do in my day to day life. On the other hand,
+I have valuable data out there in those VMs, my secured communication
+sometimes depends on them, so I do have incentive to make them as
+secured as possible. Internet is a very dangerous place after all.&lt;/p&gt;
+&lt;p&gt;Putting myself in the shoe of a malicious actor, I won't have the mood
+to penetrate a random server on the Internet with my own human time if
+that target is not highly valuable. The attackers are likely to use
+some well-known exploits to mass-scan to maximise gain over a set
+period of time. With that in mind, most if not all attacks I'm facing
+are from script-kiddies. Securing my VMs from attackers on the
+Internet is simple -- I just need to follow every security
+announcement channel of the software I use (from operating system to
+applications) and at the same time apply security best practices. That
+should save my arse under most situations.&lt;/p&gt;
+&lt;p&gt;An attack vector in the cloud era is the "cloud" itself. There will
+always be security bugs in hypervisors. It's better to just assume the
+underlying platform unsecured. This imposes quite a challenge. One can
+easily turn into fully paranoid mode considering what the underlying
+platform is able to do to his or her VMs. There isn't really not much
+I can do. But again, my basic assumption is that my data isn't too
+valuable to an attackers, so off-the-shelf encryption is good enough
+for me. In fact, I do full disk encryption in my VMs most of the time,
+so that no-one can peek into my disk image when it's offline. I also
+stay away from the pre-baked images from the providers, so that I'm
+immune to mis-configuration in their scripts or bug in the image.&lt;/p&gt;
+&lt;p&gt;I don't really consider having an IDS like Tripwire or AIDE running. It would
+be relatively easy to observe abnormal traffic to determine if my box is
+compromised. IDS doesn't provide much value in the threats &lt;em&gt;I&lt;/em&gt; face.
+Furthermore, by the time IDS or any other mechanism discovers an intrusion has
+happened the highest priority is to migrate all data to a safe place. Figuring
+out what bugs lead to the intrusion is irrelevant in that context. It would be
+nice though if there is tool that is integrated with Linux distribution.
+FreeBSD has `freebsd-update IDS', which is convenient and useful to a degree. I
+haven't found similar utility in the Linux distribution I use and it's not
+likely to happen in the future because fundamentally Linux distribution is not
+developed as an entity but built with a bunch of loosely coupled software.&lt;/p&gt;
+&lt;p&gt;End of brain dump when I'm building a storage VM.&lt;/p&gt;</summary></entry><entry><title>Free Software is not Free</title><link href="http://blog.liuw.name/free-software-is-not-free.html" rel="alternate"></link><updated>2015-11-16T22:30:00+00:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2015-11-16:free-software-is-not-free.html</id><summary type="html">&lt;p&gt;There has been some back and forth discussion on how Xen's security process
 sucks. Well, not quite. Though the email was titled that way, the content
 didn't have much to do with security process per se. True, there are
 technically correct points in that thread (with which I completely agree), but

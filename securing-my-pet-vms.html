@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>Securing My Pet VMs - Liuw's Thinkpad</title>	
+	<meta name="author" content="Wei Liu">
+	
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0">
+	
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:700,400|Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="http://blog.liuw.name/theme/css/main.css" type="text/css" />
+		
+	<!--[if lt IE 9]>
+		<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+	
+	<link href="http://blog.liuw.name/" type="application/atom+xml" rel="alternate" title="Liuw's Thinkpad ATOM Feed" />
+	<link href="http://blog.liuw.name/feeds/all.rss.xml" type="application/atom+xml" rel="alternate" title="Liuw's Thinkpad RSS Feed" />
+</head>
+	
+<body>		
+	<header class="clearfix" role="banner">
+		<div class="wrapper">
+			<h1 class="huge"><a href="http://blog.liuw.name">Liuw's Thinkpad</a></h1>
+		</div>
+	</header>
+	
+<div role="main" class="content clearfix">	
+	<article>
+		<div class="post wrapper">
+			<h1>Securing My Pet VMs</h1>
+			<p>I have a number of (0 to 3, depending on conditions) pet VMs running
+somewhere in the "cloud".</p>
+<p>I don't want to become a 24x7 system administrator myself. I have far
+more important things to do in my day to day life. On the other hand,
+I have valuable data out there in those VMs, my secured communication
+sometimes depends on them, so I do have incentive to make them as
+secured as possible. Internet is a very dangerous place after all.</p>
+<p>Putting myself in the shoe of a malicious actor, I won't have the mood
+to penetrate a random server on the Internet with my own human time if
+that target is not highly valuable. The attackers are likely to use
+some well-known exploits to mass-scan to maximise gain over a set
+period of time. With that in mind, most if not all attacks I'm facing
+are from script-kiddies. Securing my VMs from attackers on the
+Internet is simple -- I just need to follow every security
+announcement channel of the software I use (from operating system to
+applications) and at the same time apply security best practices. That
+should save my arse under most situations.</p>
+<p>An attack vector in the cloud era is the "cloud" itself. There will
+always be security bugs in hypervisors. It's better to just assume the
+underlying platform unsecured. This imposes quite a challenge. One can
+easily turn into fully paranoid mode considering what the underlying
+platform is able to do to his or her VMs. There isn't really not much
+I can do. But again, my basic assumption is that my data isn't too
+valuable to an attackers, so off-the-shelf encryption is good enough
+for me. In fact, I do full disk encryption in my VMs most of the time,
+so that no-one can peek into my disk image when it's offline. I also
+stay away from the pre-baked images from the providers, so that I'm
+immune to mis-configuration in their scripts or bug in the image.</p>
+<p>I don't really consider having an IDS like Tripwire or AIDE running. It would
+be relatively easy to observe abnormal traffic to determine if my box is
+compromised. IDS doesn't provide much value in the threats <em>I</em> face.
+Furthermore, by the time IDS or any other mechanism discovers an intrusion has
+happened the highest priority is to migrate all data to a safe place. Figuring
+out what bugs lead to the intrusion is irrelevant in that context. It would be
+nice though if there is tool that is integrated with Linux distribution.
+FreeBSD has `freebsd-update IDS', which is convenient and useful to a degree. I
+haven't found similar utility in the Linux distribution I use and it's not
+likely to happen in the future because fundamentally Linux distribution is not
+developed as an entity but built with a bunch of loosely coupled software.</p>
+<p>End of brain dump when I'm building a storage VM.</p>
+			
+			<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+						
+			
+		</div>
+	
+<div class="meta wrapper">
+	<time datetime="2015-11-23T23:49:00" pubdate>Mon 23 November 2015</time>
+	<ul class="tag clearfix">
+		<li><a href="http://blog.liuw.name/category/misc.html">Misc</a></li>
+	</ul>
+</div>	</article>	
+</div>
+	
+		
+<footer class="clearfix">
+	<div class="wrapper pages">
+		<ul class="nav">
+			<li><a href="http://blog.liuw.name/pages/about.html">About</a></li>
+			<li><a href="http://blog.liuw.name/archives.html">Archive</a></li>
+		</ul>
+	</div>
+	
+	<div class="copy wrapper">
+		<ul class="social">
+		</ul>
+	
+		<p role="contentinfo">© 2012 - 2014 Wei Liu<br>
+		Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">Pelican</a>.</p>
+	</div>
+</footer>
+	
+	<script>
+	  var _gaq=[['_setAccount',''],['_trackPageview']];
+	  (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+	  g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+	  s.parentNode.insertBefore(g,s)}(document,'script'));
+	</script>
+</body>
+</html>
