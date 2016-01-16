@@ -13,57 +13,57 @@ functionalities. The core principle remains the same in Xen, however.&lt;/p&gt;
 files are placed under x86 folders. There are only two files,
 xen/arch/x86/alternative.c and xen/include/asm-x86/alternative.h.&lt;/p&gt;
 &lt;p&gt;Let's look at the header file first.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="n"&gt;alt_instr&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="n"&gt;s32&lt;/span&gt; &lt;span class="n"&gt;instr_offset&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;       &lt;span class="cm"&gt;/* original instruction */&lt;/span&gt;
-    &lt;span class="n"&gt;s32&lt;/span&gt; &lt;span class="n"&gt;repl_offset&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;        &lt;span class="cm"&gt;/* offset to replacement instruction */&lt;/span&gt;
-    &lt;span class="n"&gt;u16&lt;/span&gt; &lt;span class="n"&gt;cpuid&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;              &lt;span class="cm"&gt;/* cpuid bit set for replacement */&lt;/span&gt;
-    &lt;span class="n"&gt;u8&lt;/span&gt;  &lt;span class="n"&gt;instrlen&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;           &lt;span class="cm"&gt;/* length of original instruction */&lt;/span&gt;
-    &lt;span class="n"&gt;u8&lt;/span&gt;  &lt;span class="n"&gt;replacementlen&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;     &lt;span class="cm"&gt;/* length of new instruction, &amp;lt;= instrlen */&lt;/span&gt;
-&lt;span class="p"&gt;};&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;struct alt_instr {
+    s32 instr_offset;       /* original instruction */
+    s32 repl_offset;        /* offset to replacement instruction */
+    u16 cpuid;              /* cpuid bit set for replacement */
+    u8  instrlen;           /* length of original instruction */
+    u8  replacementlen;     /* length of new instruction, &amp;lt;= instrlen */
+};
 
-&lt;span class="cp"&gt;#define OLDINSTR(oldinstr)      &amp;quot;661:\n\t&amp;quot; oldinstr &amp;quot;\n662:\n&amp;quot;&lt;/span&gt;
+#define OLDINSTR(oldinstr)      &amp;quot;661:\n\t&amp;quot; oldinstr &amp;quot;\n662:\n&amp;quot;
 
-&lt;span class="cp"&gt;#define b_replacement(number)   &amp;quot;663&amp;quot;#number&lt;/span&gt;
-&lt;span class="cp"&gt;#define e_replacement(number)   &amp;quot;664&amp;quot;#number&lt;/span&gt;
+#define b_replacement(number)   &amp;quot;663&amp;quot;#number
+#define e_replacement(number)   &amp;quot;664&amp;quot;#number
 
-&lt;span class="cp"&gt;#define alt_slen &amp;quot;662b-661b&amp;quot;&lt;/span&gt;
-&lt;span class="cp"&gt;#define alt_rlen(number) e_replacement(number)&amp;quot;f-&amp;quot;b_replacement(number)&amp;quot;f&amp;quot;&lt;/span&gt;
+#define alt_slen &amp;quot;662b-661b&amp;quot;
+#define alt_rlen(number) e_replacement(number)&amp;quot;f-&amp;quot;b_replacement(number)&amp;quot;f&amp;quot;
 
-&lt;span class="cp"&gt;#define ALTINSTR_ENTRY(feature, number)                                       \&lt;/span&gt;
-&lt;span class="cp"&gt;        &amp;quot; .long 661b - .\n&amp;quot;                             &lt;/span&gt;&lt;span class="cm"&gt;/* label           */&lt;/span&gt;&lt;span class="cp"&gt; \&lt;/span&gt;
-&lt;span class="cp"&gt;        &amp;quot; .long &amp;quot; b_replacement(number)&amp;quot;f - .\n&amp;quot;        &lt;/span&gt;&lt;span class="cm"&gt;/* new instruction */&lt;/span&gt;&lt;span class="cp"&gt; \&lt;/span&gt;
-&lt;span class="cp"&gt;        &amp;quot; .word &amp;quot; __stringify(feature) &amp;quot;\n&amp;quot;             &lt;/span&gt;&lt;span class="cm"&gt;/* feature bit     */&lt;/span&gt;&lt;span class="cp"&gt; \&lt;/span&gt;
-&lt;span class="cp"&gt;        &amp;quot; .byte &amp;quot; alt_slen &amp;quot;\n&amp;quot;                         &lt;/span&gt;&lt;span class="cm"&gt;/* source len      */&lt;/span&gt;&lt;span class="cp"&gt; \&lt;/span&gt;
-&lt;span class="cp"&gt;        &amp;quot; .byte &amp;quot; alt_rlen(number) &amp;quot;\n&amp;quot;                 &lt;/span&gt;&lt;span class="cm"&gt;/* replacement len */&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
+#define ALTINSTR_ENTRY(feature, number)                                       \
+        &amp;quot; .long 661b - .\n&amp;quot;                             /* label           */ \
+        &amp;quot; .long &amp;quot; b_replacement(number)&amp;quot;f - .\n&amp;quot;        /* new instruction */ \
+        &amp;quot; .word &amp;quot; __stringify(feature) &amp;quot;\n&amp;quot;             /* feature bit     */ \
+        &amp;quot; .byte &amp;quot; alt_slen &amp;quot;\n&amp;quot;                         /* source len      */ \
+        &amp;quot; .byte &amp;quot; alt_rlen(number) &amp;quot;\n&amp;quot;                 /* replacement len */
 
-&lt;span class="cp"&gt;#define DISCARD_ENTRY(number)                           &lt;/span&gt;&lt;span class="cm"&gt;/* rlen &amp;lt;= slen */&lt;/span&gt;&lt;span class="cp"&gt;    \&lt;/span&gt;
-&lt;span class="cp"&gt;        &amp;quot; .byte 0xff + (&amp;quot; alt_rlen(number) &amp;quot;) - (&amp;quot; alt_slen &amp;quot;)\n&amp;quot;&lt;/span&gt;
+#define DISCARD_ENTRY(number)                           /* rlen &amp;lt;= slen */    \
+        &amp;quot; .byte 0xff + (&amp;quot; alt_rlen(number) &amp;quot;) - (&amp;quot; alt_slen &amp;quot;)\n&amp;quot;
 
-&lt;span class="cp"&gt;#define ALTINSTR_REPLACEMENT(newinstr, feature, number) &lt;/span&gt;&lt;span class="cm"&gt;/* replacement */&lt;/span&gt;&lt;span class="cp"&gt;     \&lt;/span&gt;
-&lt;span class="cp"&gt;        b_replacement(number)&amp;quot;:\n\t&amp;quot; newinstr &amp;quot;\n&amp;quot; e_replacement(number) &amp;quot;:\n\t&amp;quot;&lt;/span&gt;
+#define ALTINSTR_REPLACEMENT(newinstr, feature, number) /* replacement */     \
+        b_replacement(number)&amp;quot;:\n\t&amp;quot; newinstr &amp;quot;\n&amp;quot; e_replacement(number) &amp;quot;:\n\t&amp;quot;
 
-&lt;span class="cm"&gt;/* alternative assembly primitive: */&lt;/span&gt;
-&lt;span class="cp"&gt;#define ALTERNATIVE(oldinstr, newinstr, feature)                        \&lt;/span&gt;
-&lt;span class="cp"&gt;        OLDINSTR(oldinstr)                                              \&lt;/span&gt;
-&lt;span class="cp"&gt;        &amp;quot;.pushsection .altinstructions,\&amp;quot;a\&amp;quot;\n&amp;quot;                         \&lt;/span&gt;
-&lt;span class="cp"&gt;        ALTINSTR_ENTRY(feature, 1)                                      \&lt;/span&gt;
-&lt;span class="cp"&gt;        &amp;quot;.popsection\n&amp;quot;                                                 \&lt;/span&gt;
-&lt;span class="cp"&gt;        &amp;quot;.pushsection .discard,\&amp;quot;aw\&amp;quot;,@progbits\n&amp;quot;                      \&lt;/span&gt;
-&lt;span class="cp"&gt;        DISCARD_ENTRY(1)                                                \&lt;/span&gt;
-&lt;span class="cp"&gt;        &amp;quot;.popsection\n&amp;quot;                                                 \&lt;/span&gt;
-&lt;span class="cp"&gt;        &amp;quot;.pushsection .altinstr_replacement, \&amp;quot;ax\&amp;quot;\n&amp;quot;                  \&lt;/span&gt;
-&lt;span class="cp"&gt;        ALTINSTR_REPLACEMENT(newinstr, feature, 1)                      \&lt;/span&gt;
-&lt;span class="cp"&gt;        &amp;quot;.popsection&amp;quot;&lt;/span&gt;
+/* alternative assembly primitive: */
+#define ALTERNATIVE(oldinstr, newinstr, feature)                        \
+        OLDINSTR(oldinstr)                                              \
+        &amp;quot;.pushsection .altinstructions,\&amp;quot;a\&amp;quot;\n&amp;quot;                         \
+        ALTINSTR_ENTRY(feature, 1)                                      \
+        &amp;quot;.popsection\n&amp;quot;                                                 \
+        &amp;quot;.pushsection .discard,\&amp;quot;aw\&amp;quot;,@progbits\n&amp;quot;                      \
+        DISCARD_ENTRY(1)                                                \
+        &amp;quot;.popsection\n&amp;quot;                                                 \
+        &amp;quot;.pushsection .altinstr_replacement, \&amp;quot;ax\&amp;quot;\n&amp;quot;                  \
+        ALTINSTR_REPLACEMENT(newinstr, feature, 1)                      \
+        &amp;quot;.popsection&amp;quot;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;ALTINSTR_ENTRY is the equivelant of struct alt_instr in assembly.&lt;/p&gt;
 &lt;p&gt;For example, stac and clac are defined using alternative mechanism.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="n"&gt;always_inline&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;clac&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="cm"&gt;/* Note: a barrier is implicit in alternative() */&lt;/span&gt;
-    &lt;span class="n"&gt;alternative&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ASM_NOP3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;___stringify&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__ASM_CLAC&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;X86_FEATURE_SMAP&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;static always_inline void clac(void)
+{
+    /* Note: a barrier is implicit in alternative() */
+    alternative(ASM_NOP3, ___stringify(__ASM_CLAC), X86_FEATURE_SMAP);
+}
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -74,28 +74,28 @@ long. Then an alternative instruction entry is created in
 section. Finally the alternative instructions used to replace the
 original ones are stored in .altinstr_replacement section.&lt;/p&gt;
 &lt;p&gt;To extend this snippet into assembly code.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;asm&lt;/span&gt; &lt;span class="nf"&gt;volatile&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ALTERNATIVE&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ASM_NOP3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;__stringify&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__ASM_CLAC&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;X86_FEATURE_SMAP&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;memory&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;asm volatile (ALTERNATIVE(ASM_NOP3, __stringify(__ASM_CLAC), X86_FEATURE_SMAP) : : : &amp;quot;memory&amp;quot;);
 
-&lt;span class="n"&gt;asm&lt;/span&gt; &lt;span class="k"&gt;volatile&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
-    &lt;span class="s"&gt;&amp;quot;661:&lt;/span&gt;&lt;span class="se"&gt;\n\t&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;ASM_NOP3&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;662:&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;
+asm volatile (
+    &amp;quot;661:\n\t&amp;quot; ASM_NOP3 &amp;quot;\n662:\n&amp;quot;
 
-    &lt;span class="s"&gt;&amp;quot;.pushsection .altinstructions,&lt;/span&gt;&lt;span class="se"&gt;\&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;a&lt;/span&gt;&lt;span class="se"&gt;\&amp;quot;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;                         \
-    &lt;span class="s"&gt;&amp;quot; .long 661b - .&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;                             &lt;span class="cm"&gt;/* label           */&lt;/span&gt; \
-    &lt;span class="s"&gt;&amp;quot; .long 6631f - .&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;        &lt;span class="cm"&gt;/* new instruction */&lt;/span&gt; \
-    &lt;span class="s"&gt;&amp;quot; .word &amp;quot;&lt;/span&gt; &lt;span class="n"&gt;__stringify&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;X86_FEATURE_SMAP&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;             &lt;span class="cm"&gt;/* feature bit     */&lt;/span&gt; \
-    &lt;span class="s"&gt;&amp;quot; .byte 662b - 661b&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;                         &lt;span class="cm"&gt;/* source len      */&lt;/span&gt; \
-    &lt;span class="s"&gt;&amp;quot; .byte 6641f - 6631f&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;                 &lt;span class="cm"&gt;/* replacement len */&lt;/span&gt;
-    &lt;span class="s"&gt;&amp;quot;.popsection&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;                                                 \
+    &amp;quot;.pushsection .altinstructions,\&amp;quot;a\&amp;quot;\n&amp;quot;                         \
+    &amp;quot; .long 661b - .\n&amp;quot;                             /* label           */ \
+    &amp;quot; .long 6631f - .\n&amp;quot;        /* new instruction */ \
+    &amp;quot; .word &amp;quot; __stringify(X86_FEATURE_SMAP) &amp;quot;\n&amp;quot;             /* feature bit     */ \
+    &amp;quot; .byte 662b - 661b\n&amp;quot;                         /* source len      */ \
+    &amp;quot; .byte 6641f - 6631f\n&amp;quot;                 /* replacement len */
+    &amp;quot;.popsection\n&amp;quot;                                                 \
 
-    &lt;span class="s"&gt;&amp;quot;.pushsection .discard,&lt;/span&gt;&lt;span class="se"&gt;\&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;aw&lt;/span&gt;&lt;span class="se"&gt;\&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;,@progbits&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;                      \
-    &lt;span class="s"&gt;&amp;quot; .byte 0xff + (6641f - 6631f) - (662b - 661b)&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;
-    &lt;span class="s"&gt;&amp;quot;.popsection&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;                                                 \
+    &amp;quot;.pushsection .discard,\&amp;quot;aw\&amp;quot;,@progbits\n&amp;quot;                      \
+    &amp;quot; .byte 0xff + (6641f - 6631f) - (662b - 661b)\n&amp;quot;
+    &amp;quot;.popsection\n&amp;quot;                                                 \
 
-    &lt;span class="s"&gt;&amp;quot;.pushsection .altinstr_replacement, &lt;/span&gt;&lt;span class="se"&gt;\&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;ax&lt;/span&gt;&lt;span class="se"&gt;\&amp;quot;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;                  \
-    &lt;span class="s"&gt;&amp;quot;6631:&lt;/span&gt;&lt;span class="se"&gt;\n\t&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;__stringify&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__ASM_CLAC&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;6641:&lt;/span&gt;&lt;span class="se"&gt;\n\t&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;   
-    &lt;span class="s"&gt;&amp;quot;.popsection&amp;quot;&lt;/span&gt;
+    &amp;quot;.pushsection .altinstr_replacement, \&amp;quot;ax\&amp;quot;\n&amp;quot;                  \
+    &amp;quot;6631:\n\t&amp;quot; __stringify(__ASM_CLAC) &amp;quot;\n6641:\n\t&amp;quot;   
+    &amp;quot;.popsection&amp;quot;
 
-&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;memory&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+: : : &amp;quot;memory&amp;quot;)
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -106,58 +106,58 @@ is not available, those instructions remain NOPs.&lt;/p&gt;
 &lt;p&gt;If you inspect the object file that contains functions that are
 implemented with alternative mechanism (for example, usercopy.c calls
 stac and clac), you can see:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;objdump&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt; &lt;span class="n"&gt;xen&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;arch&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;x86&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usercopy&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;o&lt;/span&gt;
-&lt;span class="n"&gt;xen&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;arch&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;x86&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usercopy&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;o&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;     &lt;span class="n"&gt;file&lt;/span&gt; &lt;span class="n"&gt;format&lt;/span&gt; &lt;span class="n"&gt;elf64&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;x86&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;64&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;objdump -h xen/arch/x86/usercopy.o
+xen/arch/x86/usercopy.o:     file format elf64-x86-64
 
-&lt;span class="nl"&gt;Sections:&lt;/span&gt;
-&lt;span class="n"&gt;Idx&lt;/span&gt; &lt;span class="n"&gt;Name&lt;/span&gt;          &lt;span class="n"&gt;Size&lt;/span&gt;      &lt;span class="n"&gt;VMA&lt;/span&gt;               &lt;span class="n"&gt;LMA&lt;/span&gt;               &lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="n"&gt;off&lt;/span&gt;  &lt;span class="n"&gt;Algn&lt;/span&gt;
- &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;         &lt;span class="mf"&gt;000001e9&lt;/span&gt;  &lt;span class="mo"&gt;0000000000000000&lt;/span&gt;  &lt;span class="mo"&gt;0000000000000000&lt;/span&gt;  &lt;span class="mo"&gt;00000040&lt;/span&gt;  &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;
-                 &lt;span class="n"&gt;CONTENTS&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ALLOC&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;LOAD&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;RELOC&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;READONLY&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;CODE&lt;/span&gt;
- &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;         &lt;span class="mo"&gt;00000000&lt;/span&gt;  &lt;span class="mo"&gt;0000000000000000&lt;/span&gt;  &lt;span class="mo"&gt;0000000000000000&lt;/span&gt;  &lt;span class="mo"&gt;0000022&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;  &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;
-                 &lt;span class="n"&gt;CONTENTS&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ALLOC&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;LOAD&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;DATA&lt;/span&gt;
- &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bss&lt;/span&gt;          &lt;span class="mo"&gt;00000000&lt;/span&gt;  &lt;span class="mo"&gt;0000000000000000&lt;/span&gt;  &lt;span class="mo"&gt;0000000000000000&lt;/span&gt;  &lt;span class="mo"&gt;0000022&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;  &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;
-                 &lt;span class="n"&gt;ALLOC&lt;/span&gt;
- &lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;altinstructions&lt;/span&gt; &lt;span class="mo"&gt;0000004&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;  &lt;span class="mo"&gt;0000000000000000&lt;/span&gt;  &lt;span class="mo"&gt;0000000000000000&lt;/span&gt;  &lt;span class="mo"&gt;0000022&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;  &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;
-                 &lt;span class="n"&gt;CONTENTS&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ALLOC&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;LOAD&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;RELOC&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;READONLY&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;DATA&lt;/span&gt;
- &lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;discard&lt;/span&gt;      &lt;span class="mo"&gt;00000006&lt;/span&gt;  &lt;span class="mo"&gt;0000000000000000&lt;/span&gt;  &lt;span class="mo"&gt;0000000000000000&lt;/span&gt;  &lt;span class="mo"&gt;00000274&lt;/span&gt;  &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;
-                 &lt;span class="n"&gt;CONTENTS&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ALLOC&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;LOAD&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;DATA&lt;/span&gt;
- &lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;altinstr_replacement&lt;/span&gt; &lt;span class="mo"&gt;00000012&lt;/span&gt;  &lt;span class="mo"&gt;0000000000000000&lt;/span&gt;  &lt;span class="mo"&gt;0000000000000000&lt;/span&gt;  &lt;span class="mo"&gt;0000027&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;  &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;
-                 &lt;span class="n"&gt;CONTENTS&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ALLOC&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;LOAD&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;READONLY&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;CODE&lt;/span&gt;
+Sections:
+Idx Name          Size      VMA               LMA               File off  Algn
+ &lt;span class="m"&gt;0&lt;/span&gt; .text         000001e9  &lt;span class="m"&gt;0000000000000000&lt;/span&gt;  &lt;span class="m"&gt;0000000000000000&lt;/span&gt;  &lt;span class="m"&gt;00000040&lt;/span&gt;  2**2
+                 CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ &lt;span class="m"&gt;1&lt;/span&gt; .data         &lt;span class="m"&gt;00000000&lt;/span&gt;  &lt;span class="m"&gt;0000000000000000&lt;/span&gt;  &lt;span class="m"&gt;0000000000000000&lt;/span&gt;  0000022c  2**2
+                 CONTENTS, ALLOC, LOAD, DATA
+ &lt;span class="m"&gt;2&lt;/span&gt; .bss          &lt;span class="m"&gt;00000000&lt;/span&gt;  &lt;span class="m"&gt;0000000000000000&lt;/span&gt;  &lt;span class="m"&gt;0000000000000000&lt;/span&gt;  0000022c  2**2
+                 ALLOC
+ &lt;span class="m"&gt;3&lt;/span&gt; .altinstructions &lt;span class="m"&gt;00000048&lt;/span&gt;  &lt;span class="m"&gt;0000000000000000&lt;/span&gt;  &lt;span class="m"&gt;0000000000000000&lt;/span&gt;  0000022c  2**0
+                 CONTENTS, ALLOC, LOAD, RELOC, READONLY, DATA
+ &lt;span class="m"&gt;4&lt;/span&gt; .discard      &lt;span class="m"&gt;00000006&lt;/span&gt;  &lt;span class="m"&gt;0000000000000000&lt;/span&gt;  &lt;span class="m"&gt;0000000000000000&lt;/span&gt;  &lt;span class="m"&gt;00000274&lt;/span&gt;  2**0
+                 CONTENTS, ALLOC, LOAD, DATA
+ &lt;span class="m"&gt;5&lt;/span&gt; .altinstr_replacement &lt;span class="m"&gt;00000012&lt;/span&gt;  &lt;span class="m"&gt;0000000000000000&lt;/span&gt;  &lt;span class="m"&gt;0000000000000000&lt;/span&gt;  0000027a  2**0
+                 CONTENTS, ALLOC, LOAD, READONLY, CODE
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Disassembling .altinstr_replacement section yields:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;objdump&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;altinstr_replacement&lt;/span&gt; &lt;span class="n"&gt;xen&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;arch&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;x86&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usercopy&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;o&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;objdump -d -j .altinstr_replacement xen/arch/x86/usercopy.o
 
-&lt;span class="n"&gt;xen&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;arch&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;x86&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usercopy&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;o&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;     &lt;span class="n"&gt;file&lt;/span&gt; &lt;span class="n"&gt;format&lt;/span&gt; &lt;span class="n"&gt;elf64&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;x86&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;64&lt;/span&gt;
+xen/arch/x86/usercopy.o:     file format elf64-x86-64
 
-&lt;span class="n"&gt;Disassembly&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;section&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;altinstr_replacement&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+Disassembly of section .altinstr_replacement:
 
-&lt;span class="mo"&gt;0000000000000000&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;altinstr_replacement&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;:&lt;/span&gt;
-   &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;   &lt;span class="mf"&gt;0f&lt;/span&gt; &lt;span class="mo"&gt;01&lt;/span&gt;                   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bad&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-   &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;   &lt;span class="n"&gt;cb&lt;/span&gt;                      &lt;span class="n"&gt;lret&lt;/span&gt;
-   &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;   &lt;span class="mf"&gt;0f&lt;/span&gt; &lt;span class="mo"&gt;01&lt;/span&gt;                   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bad&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-   &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;   &lt;span class="n"&gt;ca&lt;/span&gt; &lt;span class="mf"&gt;0f&lt;/span&gt; &lt;span class="mo"&gt;01&lt;/span&gt;                &lt;span class="n"&gt;lret&lt;/span&gt;   &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="mh"&gt;0x10f&lt;/span&gt;
-   &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;   &lt;span class="n"&gt;cb&lt;/span&gt;                      &lt;span class="n"&gt;lret&lt;/span&gt;
-   &lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;   &lt;span class="mf"&gt;0f&lt;/span&gt; &lt;span class="mo"&gt;01&lt;/span&gt;                   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bad&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-   &lt;span class="nl"&gt;b:&lt;/span&gt;   &lt;span class="n"&gt;ca&lt;/span&gt; &lt;span class="mf"&gt;0f&lt;/span&gt; &lt;span class="mo"&gt;01&lt;/span&gt;                &lt;span class="n"&gt;lret&lt;/span&gt;   &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="mh"&gt;0x10f&lt;/span&gt;
-   &lt;span class="nl"&gt;e:&lt;/span&gt;   &lt;span class="n"&gt;cb&lt;/span&gt;                      &lt;span class="n"&gt;lret&lt;/span&gt;
-   &lt;span class="nl"&gt;f:&lt;/span&gt;   &lt;span class="mf"&gt;0f&lt;/span&gt; &lt;span class="mo"&gt;01&lt;/span&gt;                   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bad&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;   &lt;span class="n"&gt;ca&lt;/span&gt;                      &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;byte&lt;/span&gt; &lt;span class="mh"&gt;0xca&lt;/span&gt;
+&lt;span class="m"&gt;0000000000000000&lt;/span&gt; &amp;lt;.altinstr_replacement&amp;gt;:
+   0:   0f &lt;span class="m"&gt;01&lt;/span&gt;                   &lt;span class="o"&gt;(&lt;/span&gt;bad&lt;span class="o"&gt;)&lt;/span&gt;
+   2:   cb                      lret
+   3:   0f &lt;span class="m"&gt;01&lt;/span&gt;                   &lt;span class="o"&gt;(&lt;/span&gt;bad&lt;span class="o"&gt;)&lt;/span&gt;
+   5:   ca 0f &lt;span class="m"&gt;01&lt;/span&gt;                lret   &lt;span class="nv"&gt;$0x10f&lt;/span&gt;
+   8:   cb                      lret
+   9:   0f &lt;span class="m"&gt;01&lt;/span&gt;                   &lt;span class="o"&gt;(&lt;/span&gt;bad&lt;span class="o"&gt;)&lt;/span&gt;
+   b:   ca 0f &lt;span class="m"&gt;01&lt;/span&gt;                lret   &lt;span class="nv"&gt;$0x10f&lt;/span&gt;
+   e:   cb                      lret
+   f:   0f &lt;span class="m"&gt;01&lt;/span&gt;                   &lt;span class="o"&gt;(&lt;/span&gt;bad&lt;span class="o"&gt;)&lt;/span&gt;
+  11:   ca                      .byte 0xca
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;0f 01 ca and 0f 01 cb are machine code for clac and stac.&lt;/p&gt;
 &lt;p&gt;Use gdb to look at call site of stac:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;$&lt;/span&gt; &lt;span class="nx"&gt;gdb&lt;/span&gt; &lt;span class="nx"&gt;xen&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;arch&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;x86&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;usercopy&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;o&lt;/span&gt;
-&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;gdb&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nx"&gt;disas&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;r&lt;/span&gt; &lt;span class="nx"&gt;__copy_from_user_ll&lt;/span&gt;
-&lt;span class="nx"&gt;Dump&lt;/span&gt; &lt;span class="nx"&gt;of&lt;/span&gt; &lt;span class="nx"&gt;assembler&lt;/span&gt; &lt;span class="nx"&gt;code&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;__copy_from_user_ll&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
-   &lt;span class="mh"&gt;0x000000000000003c&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;+&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;:&lt;/span&gt; &lt;span class="mi"&gt;55&lt;/span&gt;  &lt;span class="nx"&gt;push&lt;/span&gt;   &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="nx"&gt;rbp&lt;/span&gt;
-   &lt;span class="mh"&gt;0x000000000000003d&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;:&lt;/span&gt; &lt;span class="mi"&gt;48&lt;/span&gt; &lt;span class="mi"&gt;89&lt;/span&gt; &lt;span class="nx"&gt;e5&lt;/span&gt;    &lt;span class="nx"&gt;mov&lt;/span&gt;    &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="nx"&gt;rsp&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="nx"&gt;rbp&lt;/span&gt;
-   &lt;span class="mh"&gt;0x0000000000000040&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;+&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;:&lt;/span&gt; &lt;span class="mi"&gt;89&lt;/span&gt; &lt;span class="nx"&gt;d1&lt;/span&gt;   &lt;span class="nx"&gt;mov&lt;/span&gt;    &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="nx"&gt;edx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="nx"&gt;ecx&lt;/span&gt;
-   &lt;span class="mh"&gt;0x0000000000000042&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;+&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;:&lt;/span&gt; &lt;span class="mi"&gt;66&lt;/span&gt; &lt;span class="mi"&gt;66&lt;/span&gt; &lt;span class="mi"&gt;90&lt;/span&gt;    &lt;span class="nx"&gt;data32&lt;/span&gt; &lt;span class="nx"&gt;xchg&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="nx"&gt;ax&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="nx"&gt;ax&lt;/span&gt;
-   &lt;span class="mh"&gt;0x0000000000000045&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;+&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;:&lt;/span&gt; &lt;span class="mi"&gt;48&lt;/span&gt; &lt;span class="mi"&gt;89&lt;/span&gt; &lt;span class="nx"&gt;c8&lt;/span&gt;    &lt;span class="nx"&gt;mov&lt;/span&gt;    &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="nx"&gt;rcx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="nx"&gt;rax&lt;/span&gt;
-   &lt;span class="mh"&gt;0x0000000000000048&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;+&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;:&lt;/span&gt;    &lt;span class="mi"&gt;48&lt;/span&gt; &lt;span class="mi"&gt;83&lt;/span&gt; &lt;span class="nx"&gt;f9&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="nx"&gt;f&lt;/span&gt; &lt;span class="nx"&gt;cmp&lt;/span&gt;    &lt;span class="nx"&gt;$0xf&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="nx"&gt;rcx&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;gdb xen/arch/x86/usercopy.o
+&lt;span class="o"&gt;(&lt;/span&gt;gdb&lt;span class="o"&gt;)&lt;/span&gt; disas /r __copy_from_user_ll
+Dump of assembler code &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="k"&gt;function&lt;/span&gt; __copy_from_user_ll:
+   0x000000000000003c &amp;lt;+0&amp;gt;: &lt;span class="m"&gt;55&lt;/span&gt;  push   %rbp
+   0x000000000000003d &amp;lt;+1&amp;gt;: &lt;span class="m"&gt;48&lt;/span&gt; &lt;span class="m"&gt;89&lt;/span&gt; e5    mov    %rsp,%rbp
+   0x0000000000000040 &amp;lt;+4&amp;gt;: &lt;span class="m"&gt;89&lt;/span&gt; d1   mov    %edx,%ecx
+   0x0000000000000042 &amp;lt;+6&amp;gt;: &lt;span class="m"&gt;66&lt;/span&gt; &lt;span class="m"&gt;66&lt;/span&gt; &lt;span class="m"&gt;90&lt;/span&gt;    data32 xchg %ax,%ax
+   0x0000000000000045 &amp;lt;+9&amp;gt;: &lt;span class="m"&gt;48&lt;/span&gt; &lt;span class="m"&gt;89&lt;/span&gt; c8    mov    %rcx,%rax
+   0x0000000000000048 &amp;lt;+12&amp;gt;:    &lt;span class="m"&gt;48&lt;/span&gt; &lt;span class="m"&gt;83&lt;/span&gt; f9 0f cmp    &lt;span class="nv"&gt;$0xf&lt;/span&gt;,%rcx
 &lt;/pre&gt;&lt;/div&gt;
 
 

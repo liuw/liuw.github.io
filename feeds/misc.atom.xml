@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Liuw's Thinkpad</title><link href="http://blog.liuw.name/" rel="alternate"></link><link href="http://blog.liuw.name/feeds/misc.atom.xml" rel="self"></link><id>http://blog.liuw.name/</id><updated>2015-11-26T23:23:00+00:00</updated><entry><title>On Interaction with Open Source Communities</title><link href="http://blog.liuw.name/on-interaction-with-open-source-communities.html" rel="alternate"></link><updated>2015-11-26T23:23:00+00:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2015-11-26:on-interaction-with-open-source-communities.html</id><summary type="html">&lt;p&gt;During our regular meeting my colleague said he learned a lot during a
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Liuw's Thinkpad</title><link href="http://blog.liuw.name/" rel="alternate"></link><link href="http://blog.liuw.name/feeds/misc.atom.xml" rel="self"></link><id>http://blog.liuw.name/</id><updated>2016-01-16T22:28:00+00:00</updated><entry><title>One Post per Week</title><link href="http://blog.liuw.name/one-post-per-week.html" rel="alternate"></link><updated>2016-01-16T22:28:00+00:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2016-01-16:one-post-per-week.html</id><summary type="html">&lt;p&gt;I'm now setting a new resolution: I plan to write one blog post per
+week.&lt;/p&gt;
+&lt;p&gt;I was sitting at the desktop watching random videos on the Internet
+this morning, then all of a sudden I felt hollow. I realized I would
+have wasted quite a lot of time just watching random videos on the
+Internet. Life is too short to do things like that.&lt;/p&gt;
+&lt;p&gt;As a matter of fact, I do have a lot of things that I want to write
+about. I accumulate topics quite fast because I read articles and
+books daily, so I don't think I will run out of ideas to rant about.&lt;/p&gt;
+&lt;p&gt;I have accumulated several drafts in my home directory but never got
+the motive to finish them. They sort of sit there rotting away until I
+eventually don't have the appetite to look at them anymore and delete
+them. This is quite bad.&lt;/p&gt;
+&lt;p&gt;The rule is simple: topic and length don't matter, just write one
+post a week. Rhetoric can be bad, grammar errors are allowed -- heck,
+I'm not aiming to become a professional writer or anything.&lt;/p&gt;
+&lt;p&gt;Let's see how it goes.&lt;/p&gt;</summary></entry><entry><title>On Interaction with Open Source Communities</title><link href="http://blog.liuw.name/on-interaction-with-open-source-communities.html" rel="alternate"></link><updated>2015-11-26T23:23:00+00:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2015-11-26:on-interaction-with-open-source-communities.html</id><summary type="html">&lt;p&gt;During our regular meeting my colleague said he learned a lot during a
 trip to one of our vendors, much more than he had expected. One of the
 many eye opening learnings is that it is actually quite intimidating
 to interact with open source communities.&lt;/p&gt;

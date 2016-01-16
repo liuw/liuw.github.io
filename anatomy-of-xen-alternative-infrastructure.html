@@ -46,57 +46,57 @@ functionalities. The core principle remains the same in Xen, however.</p>
 files are placed under x86 folders. There are only two files,
 xen/arch/x86/alternative.c and xen/include/asm-x86/alternative.h.</p>
 <p>Let's look at the header file first.</p>
-<div class="highlight"><pre><span class="k">struct</span> <span class="n">alt_instr</span> <span class="p">{</span>
-    <span class="n">s32</span> <span class="n">instr_offset</span><span class="p">;</span>       <span class="cm">/* original instruction */</span>
-    <span class="n">s32</span> <span class="n">repl_offset</span><span class="p">;</span>        <span class="cm">/* offset to replacement instruction */</span>
-    <span class="n">u16</span> <span class="n">cpuid</span><span class="p">;</span>              <span class="cm">/* cpuid bit set for replacement */</span>
-    <span class="n">u8</span>  <span class="n">instrlen</span><span class="p">;</span>           <span class="cm">/* length of original instruction */</span>
-    <span class="n">u8</span>  <span class="n">replacementlen</span><span class="p">;</span>     <span class="cm">/* length of new instruction, &lt;= instrlen */</span>
-<span class="p">};</span>
+<div class="highlight"><pre>struct alt_instr {
+    s32 instr_offset;       /* original instruction */
+    s32 repl_offset;        /* offset to replacement instruction */
+    u16 cpuid;              /* cpuid bit set for replacement */
+    u8  instrlen;           /* length of original instruction */
+    u8  replacementlen;     /* length of new instruction, &lt;= instrlen */
+};
 
-<span class="cp">#define OLDINSTR(oldinstr)      &quot;661:\n\t&quot; oldinstr &quot;\n662:\n&quot;</span>
+#define OLDINSTR(oldinstr)      &quot;661:\n\t&quot; oldinstr &quot;\n662:\n&quot;
 
-<span class="cp">#define b_replacement(number)   &quot;663&quot;#number</span>
-<span class="cp">#define e_replacement(number)   &quot;664&quot;#number</span>
+#define b_replacement(number)   &quot;663&quot;#number
+#define e_replacement(number)   &quot;664&quot;#number
 
-<span class="cp">#define alt_slen &quot;662b-661b&quot;</span>
-<span class="cp">#define alt_rlen(number) e_replacement(number)&quot;f-&quot;b_replacement(number)&quot;f&quot;</span>
+#define alt_slen &quot;662b-661b&quot;
+#define alt_rlen(number) e_replacement(number)&quot;f-&quot;b_replacement(number)&quot;f&quot;
 
-<span class="cp">#define ALTINSTR_ENTRY(feature, number)                                       \</span>
-<span class="cp">        &quot; .long 661b - .\n&quot;                             </span><span class="cm">/* label           */</span><span class="cp"> \</span>
-<span class="cp">        &quot; .long &quot; b_replacement(number)&quot;f - .\n&quot;        </span><span class="cm">/* new instruction */</span><span class="cp"> \</span>
-<span class="cp">        &quot; .word &quot; __stringify(feature) &quot;\n&quot;             </span><span class="cm">/* feature bit     */</span><span class="cp"> \</span>
-<span class="cp">        &quot; .byte &quot; alt_slen &quot;\n&quot;                         </span><span class="cm">/* source len      */</span><span class="cp"> \</span>
-<span class="cp">        &quot; .byte &quot; alt_rlen(number) &quot;\n&quot;                 </span><span class="cm">/* replacement len */</span><span class="cp"></span>
+#define ALTINSTR_ENTRY(feature, number)                                       \
+        &quot; .long 661b - .\n&quot;                             /* label           */ \
+        &quot; .long &quot; b_replacement(number)&quot;f - .\n&quot;        /* new instruction */ \
+        &quot; .word &quot; __stringify(feature) &quot;\n&quot;             /* feature bit     */ \
+        &quot; .byte &quot; alt_slen &quot;\n&quot;                         /* source len      */ \
+        &quot; .byte &quot; alt_rlen(number) &quot;\n&quot;                 /* replacement len */
 
-<span class="cp">#define DISCARD_ENTRY(number)                           </span><span class="cm">/* rlen &lt;= slen */</span><span class="cp">    \</span>
-<span class="cp">        &quot; .byte 0xff + (&quot; alt_rlen(number) &quot;) - (&quot; alt_slen &quot;)\n&quot;</span>
+#define DISCARD_ENTRY(number)                           /* rlen &lt;= slen */    \
+        &quot; .byte 0xff + (&quot; alt_rlen(number) &quot;) - (&quot; alt_slen &quot;)\n&quot;
 
-<span class="cp">#define ALTINSTR_REPLACEMENT(newinstr, feature, number) </span><span class="cm">/* replacement */</span><span class="cp">     \</span>
-<span class="cp">        b_replacement(number)&quot;:\n\t&quot; newinstr &quot;\n&quot; e_replacement(number) &quot;:\n\t&quot;</span>
+#define ALTINSTR_REPLACEMENT(newinstr, feature, number) /* replacement */     \
+        b_replacement(number)&quot;:\n\t&quot; newinstr &quot;\n&quot; e_replacement(number) &quot;:\n\t&quot;
 
-<span class="cm">/* alternative assembly primitive: */</span>
-<span class="cp">#define ALTERNATIVE(oldinstr, newinstr, feature)                        \</span>
-<span class="cp">        OLDINSTR(oldinstr)                                              \</span>
-<span class="cp">        &quot;.pushsection .altinstructions,\&quot;a\&quot;\n&quot;                         \</span>
-<span class="cp">        ALTINSTR_ENTRY(feature, 1)                                      \</span>
-<span class="cp">        &quot;.popsection\n&quot;                                                 \</span>
-<span class="cp">        &quot;.pushsection .discard,\&quot;aw\&quot;,@progbits\n&quot;                      \</span>
-<span class="cp">        DISCARD_ENTRY(1)                                                \</span>
-<span class="cp">        &quot;.popsection\n&quot;                                                 \</span>
-<span class="cp">        &quot;.pushsection .altinstr_replacement, \&quot;ax\&quot;\n&quot;                  \</span>
-<span class="cp">        ALTINSTR_REPLACEMENT(newinstr, feature, 1)                      \</span>
-<span class="cp">        &quot;.popsection&quot;</span>
+/* alternative assembly primitive: */
+#define ALTERNATIVE(oldinstr, newinstr, feature)                        \
+        OLDINSTR(oldinstr)                                              \
+        &quot;.pushsection .altinstructions,\&quot;a\&quot;\n&quot;                         \
+        ALTINSTR_ENTRY(feature, 1)                                      \
+        &quot;.popsection\n&quot;                                                 \
+        &quot;.pushsection .discard,\&quot;aw\&quot;,@progbits\n&quot;                      \
+        DISCARD_ENTRY(1)                                                \
+        &quot;.popsection\n&quot;                                                 \
+        &quot;.pushsection .altinstr_replacement, \&quot;ax\&quot;\n&quot;                  \
+        ALTINSTR_REPLACEMENT(newinstr, feature, 1)                      \
+        &quot;.popsection&quot;
 </pre></div>
 
 
 <p>ALTINSTR_ENTRY is the equivelant of struct alt_instr in assembly.</p>
 <p>For example, stac and clac are defined using alternative mechanism.</p>
-<div class="highlight"><pre><span class="k">static</span> <span class="n">always_inline</span> <span class="kt">void</span> <span class="nf">clac</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="cm">/* Note: a barrier is implicit in alternative() */</span>
-    <span class="n">alternative</span><span class="p">(</span><span class="n">ASM_NOP3</span><span class="p">,</span> <span class="n">___stringify</span><span class="p">(</span><span class="n">__ASM_CLAC</span><span class="p">),</span> <span class="n">X86_FEATURE_SMAP</span><span class="p">);</span>
-<span class="p">}</span>
+<div class="highlight"><pre>static always_inline void clac(void)
+{
+    /* Note: a barrier is implicit in alternative() */
+    alternative(ASM_NOP3, ___stringify(__ASM_CLAC), X86_FEATURE_SMAP);
+}
 </pre></div>
 
 
@@ -107,28 +107,28 @@ long. Then an alternative instruction entry is created in
 section. Finally the alternative instructions used to replace the
 original ones are stored in .altinstr_replacement section.</p>
 <p>To extend this snippet into assembly code.</p>
-<div class="highlight"><pre><span class="n">asm</span> <span class="nf">volatile</span> <span class="p">(</span><span class="n">ALTERNATIVE</span><span class="p">(</span><span class="n">ASM_NOP3</span><span class="p">,</span> <span class="n">__stringify</span><span class="p">(</span><span class="n">__ASM_CLAC</span><span class="p">),</span> <span class="n">X86_FEATURE_SMAP</span><span class="p">)</span> <span class="o">:</span> <span class="o">:</span> <span class="o">:</span> <span class="s">&quot;memory&quot;</span><span class="p">);</span>
+<div class="highlight"><pre>asm volatile (ALTERNATIVE(ASM_NOP3, __stringify(__ASM_CLAC), X86_FEATURE_SMAP) : : : &quot;memory&quot;);
 
-<span class="n">asm</span> <span class="k">volatile</span> <span class="p">(</span>
-    <span class="s">&quot;661:</span><span class="se">\n\t</span><span class="s">&quot;</span> <span class="n">ASM_NOP3</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">662:</span><span class="se">\n</span><span class="s">&quot;</span>
+asm volatile (
+    &quot;661:\n\t&quot; ASM_NOP3 &quot;\n662:\n&quot;
 
-    <span class="s">&quot;.pushsection .altinstructions,</span><span class="se">\&quot;</span><span class="s">a</span><span class="se">\&quot;\n</span><span class="s">&quot;</span>                         \
-    <span class="s">&quot; .long 661b - .</span><span class="se">\n</span><span class="s">&quot;</span>                             <span class="cm">/* label           */</span> \
-    <span class="s">&quot; .long 6631f - .</span><span class="se">\n</span><span class="s">&quot;</span>        <span class="cm">/* new instruction */</span> \
-    <span class="s">&quot; .word &quot;</span> <span class="n">__stringify</span><span class="p">(</span><span class="n">X86_FEATURE_SMAP</span><span class="p">)</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span>             <span class="cm">/* feature bit     */</span> \
-    <span class="s">&quot; .byte 662b - 661b</span><span class="se">\n</span><span class="s">&quot;</span>                         <span class="cm">/* source len      */</span> \
-    <span class="s">&quot; .byte 6641f - 6631f</span><span class="se">\n</span><span class="s">&quot;</span>                 <span class="cm">/* replacement len */</span>
-    <span class="s">&quot;.popsection</span><span class="se">\n</span><span class="s">&quot;</span>                                                 \
+    &quot;.pushsection .altinstructions,\&quot;a\&quot;\n&quot;                         \
+    &quot; .long 661b - .\n&quot;                             /* label           */ \
+    &quot; .long 6631f - .\n&quot;        /* new instruction */ \
+    &quot; .word &quot; __stringify(X86_FEATURE_SMAP) &quot;\n&quot;             /* feature bit     */ \
+    &quot; .byte 662b - 661b\n&quot;                         /* source len      */ \
+    &quot; .byte 6641f - 6631f\n&quot;                 /* replacement len */
+    &quot;.popsection\n&quot;                                                 \
 
-    <span class="s">&quot;.pushsection .discard,</span><span class="se">\&quot;</span><span class="s">aw</span><span class="se">\&quot;</span><span class="s">,@progbits</span><span class="se">\n</span><span class="s">&quot;</span>                      \
-    <span class="s">&quot; .byte 0xff + (6641f - 6631f) - (662b - 661b)</span><span class="se">\n</span><span class="s">&quot;</span>
-    <span class="s">&quot;.popsection</span><span class="se">\n</span><span class="s">&quot;</span>                                                 \
+    &quot;.pushsection .discard,\&quot;aw\&quot;,@progbits\n&quot;                      \
+    &quot; .byte 0xff + (6641f - 6631f) - (662b - 661b)\n&quot;
+    &quot;.popsection\n&quot;                                                 \
 
-    <span class="s">&quot;.pushsection .altinstr_replacement, </span><span class="se">\&quot;</span><span class="s">ax</span><span class="se">\&quot;\n</span><span class="s">&quot;</span>                  \
-    <span class="s">&quot;6631:</span><span class="se">\n\t</span><span class="s">&quot;</span> <span class="n">__stringify</span><span class="p">(</span><span class="n">__ASM_CLAC</span><span class="p">)</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">6641:</span><span class="se">\n\t</span><span class="s">&quot;</span>   
-    <span class="s">&quot;.popsection&quot;</span>
+    &quot;.pushsection .altinstr_replacement, \&quot;ax\&quot;\n&quot;                  \
+    &quot;6631:\n\t&quot; __stringify(__ASM_CLAC) &quot;\n6641:\n\t&quot;   
+    &quot;.popsection&quot;
 
-<span class="o">:</span> <span class="o">:</span> <span class="o">:</span> <span class="s">&quot;memory&quot;</span><span class="p">)</span>
+: : : &quot;memory&quot;)
 </pre></div>
 
 
@@ -139,58 +139,58 @@ is not available, those instructions remain NOPs.</p>
 <p>If you inspect the object file that contains functions that are
 implemented with alternative mechanism (for example, usercopy.c calls
 stac and clac), you can see:</p>
-<div class="highlight"><pre><span class="err">$</span> <span class="n">objdump</span> <span class="o">-</span><span class="n">h</span> <span class="n">xen</span><span class="o">/</span><span class="n">arch</span><span class="o">/</span><span class="n">x86</span><span class="o">/</span><span class="n">usercopy</span><span class="p">.</span><span class="n">o</span>
-<span class="n">xen</span><span class="o">/</span><span class="n">arch</span><span class="o">/</span><span class="n">x86</span><span class="o">/</span><span class="n">usercopy</span><span class="p">.</span><span class="n">o</span><span class="o">:</span>     <span class="n">file</span> <span class="n">format</span> <span class="n">elf64</span><span class="o">-</span><span class="n">x86</span><span class="o">-</span><span class="mi">64</span>
+<div class="highlight"><pre><span class="nv">$ </span>objdump -h xen/arch/x86/usercopy.o
+xen/arch/x86/usercopy.o:     file format elf64-x86-64
 
-<span class="nl">Sections:</span>
-<span class="n">Idx</span> <span class="n">Name</span>          <span class="n">Size</span>      <span class="n">VMA</span>               <span class="n">LMA</span>               <span class="n">File</span> <span class="n">off</span>  <span class="n">Algn</span>
- <span class="mi">0</span> <span class="p">.</span><span class="n">text</span>         <span class="mf">000001e9</span>  <span class="mo">0000000000000000</span>  <span class="mo">0000000000000000</span>  <span class="mo">00000040</span>  <span class="mi">2</span><span class="o">**</span><span class="mi">2</span>
-                 <span class="n">CONTENTS</span><span class="p">,</span> <span class="n">ALLOC</span><span class="p">,</span> <span class="n">LOAD</span><span class="p">,</span> <span class="n">RELOC</span><span class="p">,</span> <span class="n">READONLY</span><span class="p">,</span> <span class="n">CODE</span>
- <span class="mi">1</span> <span class="p">.</span><span class="n">data</span>         <span class="mo">00000000</span>  <span class="mo">0000000000000000</span>  <span class="mo">0000000000000000</span>  <span class="mo">0000022</span><span class="n">c</span>  <span class="mi">2</span><span class="o">**</span><span class="mi">2</span>
-                 <span class="n">CONTENTS</span><span class="p">,</span> <span class="n">ALLOC</span><span class="p">,</span> <span class="n">LOAD</span><span class="p">,</span> <span class="n">DATA</span>
- <span class="mi">2</span> <span class="p">.</span><span class="n">bss</span>          <span class="mo">00000000</span>  <span class="mo">0000000000000000</span>  <span class="mo">0000000000000000</span>  <span class="mo">0000022</span><span class="n">c</span>  <span class="mi">2</span><span class="o">**</span><span class="mi">2</span>
-                 <span class="n">ALLOC</span>
- <span class="mi">3</span> <span class="p">.</span><span class="n">altinstructions</span> <span class="mo">0000004</span><span class="mi">8</span>  <span class="mo">0000000000000000</span>  <span class="mo">0000000000000000</span>  <span class="mo">0000022</span><span class="n">c</span>  <span class="mi">2</span><span class="o">**</span><span class="mi">0</span>
-                 <span class="n">CONTENTS</span><span class="p">,</span> <span class="n">ALLOC</span><span class="p">,</span> <span class="n">LOAD</span><span class="p">,</span> <span class="n">RELOC</span><span class="p">,</span> <span class="n">READONLY</span><span class="p">,</span> <span class="n">DATA</span>
- <span class="mi">4</span> <span class="p">.</span><span class="n">discard</span>      <span class="mo">00000006</span>  <span class="mo">0000000000000000</span>  <span class="mo">0000000000000000</span>  <span class="mo">00000274</span>  <span class="mi">2</span><span class="o">**</span><span class="mi">0</span>
-                 <span class="n">CONTENTS</span><span class="p">,</span> <span class="n">ALLOC</span><span class="p">,</span> <span class="n">LOAD</span><span class="p">,</span> <span class="n">DATA</span>
- <span class="mi">5</span> <span class="p">.</span><span class="n">altinstr_replacement</span> <span class="mo">00000012</span>  <span class="mo">0000000000000000</span>  <span class="mo">0000000000000000</span>  <span class="mo">0000027</span><span class="n">a</span>  <span class="mi">2</span><span class="o">**</span><span class="mi">0</span>
-                 <span class="n">CONTENTS</span><span class="p">,</span> <span class="n">ALLOC</span><span class="p">,</span> <span class="n">LOAD</span><span class="p">,</span> <span class="n">READONLY</span><span class="p">,</span> <span class="n">CODE</span>
+Sections:
+Idx Name          Size      VMA               LMA               File off  Algn
+ <span class="m">0</span> .text         000001e9  <span class="m">0000000000000000</span>  <span class="m">0000000000000000</span>  <span class="m">00000040</span>  2**2
+                 CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ <span class="m">1</span> .data         <span class="m">00000000</span>  <span class="m">0000000000000000</span>  <span class="m">0000000000000000</span>  0000022c  2**2
+                 CONTENTS, ALLOC, LOAD, DATA
+ <span class="m">2</span> .bss          <span class="m">00000000</span>  <span class="m">0000000000000000</span>  <span class="m">0000000000000000</span>  0000022c  2**2
+                 ALLOC
+ <span class="m">3</span> .altinstructions <span class="m">00000048</span>  <span class="m">0000000000000000</span>  <span class="m">0000000000000000</span>  0000022c  2**0
+                 CONTENTS, ALLOC, LOAD, RELOC, READONLY, DATA
+ <span class="m">4</span> .discard      <span class="m">00000006</span>  <span class="m">0000000000000000</span>  <span class="m">0000000000000000</span>  <span class="m">00000274</span>  2**0
+                 CONTENTS, ALLOC, LOAD, DATA
+ <span class="m">5</span> .altinstr_replacement <span class="m">00000012</span>  <span class="m">0000000000000000</span>  <span class="m">0000000000000000</span>  0000027a  2**0
+                 CONTENTS, ALLOC, LOAD, READONLY, CODE
 </pre></div>
 
 
 <p>Disassembling .altinstr_replacement section yields:</p>
-<div class="highlight"><pre><span class="err">$</span> <span class="n">objdump</span> <span class="o">-</span><span class="n">d</span> <span class="o">-</span><span class="n">j</span> <span class="p">.</span><span class="n">altinstr_replacement</span> <span class="n">xen</span><span class="o">/</span><span class="n">arch</span><span class="o">/</span><span class="n">x86</span><span class="o">/</span><span class="n">usercopy</span><span class="p">.</span><span class="n">o</span>
+<div class="highlight"><pre><span class="nv">$ </span>objdump -d -j .altinstr_replacement xen/arch/x86/usercopy.o
 
-<span class="n">xen</span><span class="o">/</span><span class="n">arch</span><span class="o">/</span><span class="n">x86</span><span class="o">/</span><span class="n">usercopy</span><span class="p">.</span><span class="n">o</span><span class="o">:</span>     <span class="n">file</span> <span class="n">format</span> <span class="n">elf64</span><span class="o">-</span><span class="n">x86</span><span class="o">-</span><span class="mi">64</span>
+xen/arch/x86/usercopy.o:     file format elf64-x86-64
 
-<span class="n">Disassembly</span> <span class="n">of</span> <span class="n">section</span> <span class="p">.</span><span class="n">altinstr_replacement</span><span class="o">:</span>
+Disassembly of section .altinstr_replacement:
 
-<span class="mo">0000000000000000</span> <span class="o">&lt;</span><span class="p">.</span><span class="n">altinstr_replacement</span><span class="o">&gt;:</span>
-   <span class="mi">0</span><span class="o">:</span>   <span class="mf">0f</span> <span class="mo">01</span>                   <span class="p">(</span><span class="n">bad</span><span class="p">)</span>
-   <span class="mi">2</span><span class="o">:</span>   <span class="n">cb</span>                      <span class="n">lret</span>
-   <span class="mi">3</span><span class="o">:</span>   <span class="mf">0f</span> <span class="mo">01</span>                   <span class="p">(</span><span class="n">bad</span><span class="p">)</span>
-   <span class="mi">5</span><span class="o">:</span>   <span class="n">ca</span> <span class="mf">0f</span> <span class="mo">01</span>                <span class="n">lret</span>   <span class="err">$</span><span class="mh">0x10f</span>
-   <span class="mi">8</span><span class="o">:</span>   <span class="n">cb</span>                      <span class="n">lret</span>
-   <span class="mi">9</span><span class="o">:</span>   <span class="mf">0f</span> <span class="mo">01</span>                   <span class="p">(</span><span class="n">bad</span><span class="p">)</span>
-   <span class="nl">b:</span>   <span class="n">ca</span> <span class="mf">0f</span> <span class="mo">01</span>                <span class="n">lret</span>   <span class="err">$</span><span class="mh">0x10f</span>
-   <span class="nl">e:</span>   <span class="n">cb</span>                      <span class="n">lret</span>
-   <span class="nl">f:</span>   <span class="mf">0f</span> <span class="mo">01</span>                   <span class="p">(</span><span class="n">bad</span><span class="p">)</span>
-  <span class="mi">11</span><span class="o">:</span>   <span class="n">ca</span>                      <span class="p">.</span><span class="n">byte</span> <span class="mh">0xca</span>
+<span class="m">0000000000000000</span> &lt;.altinstr_replacement&gt;:
+   0:   0f <span class="m">01</span>                   <span class="o">(</span>bad<span class="o">)</span>
+   2:   cb                      lret
+   3:   0f <span class="m">01</span>                   <span class="o">(</span>bad<span class="o">)</span>
+   5:   ca 0f <span class="m">01</span>                lret   <span class="nv">$0x10f</span>
+   8:   cb                      lret
+   9:   0f <span class="m">01</span>                   <span class="o">(</span>bad<span class="o">)</span>
+   b:   ca 0f <span class="m">01</span>                lret   <span class="nv">$0x10f</span>
+   e:   cb                      lret
+   f:   0f <span class="m">01</span>                   <span class="o">(</span>bad<span class="o">)</span>
+  11:   ca                      .byte 0xca
 </pre></div>
 
 
 <p>0f 01 ca and 0f 01 cb are machine code for clac and stac.</p>
 <p>Use gdb to look at call site of stac:</p>
-<div class="highlight"><pre><span class="nx">$</span> <span class="nx">gdb</span> <span class="nx">xen</span><span class="o">/</span><span class="nx">arch</span><span class="o">/</span><span class="nx">x86</span><span class="o">/</span><span class="nx">usercopy</span><span class="p">.</span><span class="nx">o</span>
-<span class="p">(</span><span class="nx">gdb</span><span class="p">)</span> <span class="nx">disas</span> <span class="o">/</span><span class="nx">r</span> <span class="nx">__copy_from_user_ll</span>
-<span class="nx">Dump</span> <span class="nx">of</span> <span class="nx">assembler</span> <span class="nx">code</span> <span class="k">for</span> <span class="kd">function</span> <span class="nx">__copy_from_user_ll</span><span class="o">:</span>
-   <span class="mh">0x000000000000003c</span> <span class="o">&lt;+</span><span class="mi">0</span><span class="o">&gt;:</span> <span class="mi">55</span>  <span class="nx">push</span>   <span class="o">%</span><span class="nx">rbp</span>
-   <span class="mh">0x000000000000003d</span> <span class="o">&lt;+</span><span class="mi">1</span><span class="o">&gt;:</span> <span class="mi">48</span> <span class="mi">89</span> <span class="nx">e5</span>    <span class="nx">mov</span>    <span class="o">%</span><span class="nx">rsp</span><span class="p">,</span><span class="o">%</span><span class="nx">rbp</span>
-   <span class="mh">0x0000000000000040</span> <span class="o">&lt;+</span><span class="mi">4</span><span class="o">&gt;:</span> <span class="mi">89</span> <span class="nx">d1</span>   <span class="nx">mov</span>    <span class="o">%</span><span class="nx">edx</span><span class="p">,</span><span class="o">%</span><span class="nx">ecx</span>
-   <span class="mh">0x0000000000000042</span> <span class="o">&lt;+</span><span class="mi">6</span><span class="o">&gt;:</span> <span class="mi">66</span> <span class="mi">66</span> <span class="mi">90</span>    <span class="nx">data32</span> <span class="nx">xchg</span> <span class="o">%</span><span class="nx">ax</span><span class="p">,</span><span class="o">%</span><span class="nx">ax</span>
-   <span class="mh">0x0000000000000045</span> <span class="o">&lt;+</span><span class="mi">9</span><span class="o">&gt;:</span> <span class="mi">48</span> <span class="mi">89</span> <span class="nx">c8</span>    <span class="nx">mov</span>    <span class="o">%</span><span class="nx">rcx</span><span class="p">,</span><span class="o">%</span><span class="nx">rax</span>
-   <span class="mh">0x0000000000000048</span> <span class="o">&lt;+</span><span class="mi">12</span><span class="o">&gt;:</span>    <span class="mi">48</span> <span class="mi">83</span> <span class="nx">f9</span> <span class="mi">0</span><span class="nx">f</span> <span class="nx">cmp</span>    <span class="nx">$0xf</span><span class="p">,</span><span class="o">%</span><span class="nx">rcx</span>
+<div class="highlight"><pre><span class="nv">$ </span>gdb xen/arch/x86/usercopy.o
+<span class="o">(</span>gdb<span class="o">)</span> disas /r __copy_from_user_ll
+Dump of assembler code <span class="k">for</span> <span class="k">function</span> __copy_from_user_ll:
+   0x000000000000003c &lt;+0&gt;: <span class="m">55</span>  push   %rbp
+   0x000000000000003d &lt;+1&gt;: <span class="m">48</span> <span class="m">89</span> e5    mov    %rsp,%rbp
+   0x0000000000000040 &lt;+4&gt;: <span class="m">89</span> d1   mov    %edx,%ecx
+   0x0000000000000042 &lt;+6&gt;: <span class="m">66</span> <span class="m">66</span> <span class="m">90</span>    data32 xchg %ax,%ax
+   0x0000000000000045 &lt;+9&gt;: <span class="m">48</span> <span class="m">89</span> c8    mov    %rcx,%rax
+   0x0000000000000048 &lt;+12&gt;:    <span class="m">48</span> <span class="m">83</span> f9 0f cmp    <span class="nv">$0xf</span>,%rcx
 </pre></div>
 
 
@@ -212,7 +212,7 @@ tools.</p>
 		</div>
 	
 <div class="meta wrapper">
-	<time datetime="2014-08-29T15:03:00" pubdate>Fri 29 August 2014</time>
+	<time datetime="2014-08-29T15:03:00+01:00" pubdate>Fri 29 August 2014</time>
 	<ul class="tag clearfix">
 		<li><a href="http://blog.liuw.name/category/tech.html">Tech</a></li>
 	</ul>
