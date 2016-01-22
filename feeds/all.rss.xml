@@ -1,5 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Liuw's Thinkpad</title><link>http://blog.liuw.name/</link><description></description><atom:link href="http://blog.liuw.name/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Sat, 16 Jan 2016 22:28:00 +0000</lastBuildDate><item><title>One Post per Week</title><link>http://blog.liuw.name/one-post-per-week.html</link><description>&lt;p&gt;I'm now setting a new resolution: I plan to write one blog post per
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Liuw's Thinkpad</title><link>http://blog.liuw.name/</link><description></description><atom:link href="http://blog.liuw.name/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 22 Jan 2016 23:45:00 +0000</lastBuildDate><item><title>My Stupid Mistake with Software Licensing</title><link>http://blog.liuw.name/my-stupid-mistake-with-software-licensing.html</link><description>&lt;p&gt;Never thought I would paint myself into a corner like this.&lt;/p&gt;
+&lt;p&gt;I work on open source project for a living. I like the idea that my
+code is generally useful. I care how my code is being used to a
+degree, but I'm definitely not a strong supporter of one particular
+franchise of open source camp. Instead, I carefully avoid arguments
+about different ideologies and / or definitions about open source /
+free software. Those are difficult questions. Though they are very
+important, I would rather spend my time somewhere else on more
+productive stuff.&lt;/p&gt;
+&lt;p&gt;My strategy has served me well. I sometimes read the license of the
+projects I contribute to. But all in all, I don't care that much. I
+believe most people are just like me, they want to do cool
+stuff. What's inside the license file isn't at all the critical to
+making a contribution. And to clarify my position, software, open
+source or not, it is a mean (however critical it is) to move forward
+human civilization, not an end in itself.&lt;/p&gt;
+&lt;p&gt;Things changed recently. I got involved with BSD family more
+often. That causes quite a bit of headache for me. Everyone knows a
+good software engineer should reuse as much code as possible. So when
+I try to contribute to BSD, I always think to import some code I write
+for Linux. But first and foremost, we need to get the license
+straight. Unfortunately there is quite a bit of ambiguity in the
+licensing of the code I want to pull in.&lt;/p&gt;
+&lt;p&gt;So I discussed with team members about potential issues, spent almost
+half an hour with a colleague figuring out what the actual license of
+some modules should be, and ventured to write several one-liner
+patches to fix them to reflect reality.&lt;/p&gt;
+&lt;p&gt;And that, of course, didn't end well. Everyone knew the current
+situation is not ideal, but as every other discussions regarding
+license, it quickly got derailed into several directions: discussion
+whether one particular license exists or not, suggestion that I should
+leave it as-is, suggestion I should copy all rights holders (for the
+record I didn't agree because I was merely fixing bugs).  I drafted
+one reply or two, but in the end I deleted them because I just didn't
+think that's going to be productive in any way.&lt;/p&gt;
+&lt;p&gt;The cost of any license related patch is too high. Not that writing
+a one-liner patch is particularly hard labor. It is the ensuing
+endless discussion that makes it so tiresome. No wonder everybody
+seems to avoid such topic as hard as they can.&lt;/p&gt;
+&lt;p&gt;All in all, I think I made a stupid mistake to even dare writing such
+patches. There are a lot of more interesting and pressing problems to
+be solved. That's where I should divert my energy to.&lt;/p&gt;
+&lt;p&gt;Happy hacking, not happy arguing.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Wei Liu</dc:creator><pubDate>Fri, 22 Jan 2016 23:45:00 +0000</pubDate><guid>tag:blog.liuw.name,2016-01-22:my-stupid-mistake-with-software-licensing.html</guid></item><item><title>One Post per Week</title><link>http://blog.liuw.name/one-post-per-week.html</link><description>&lt;p&gt;I'm now setting a new resolution: I plan to write one blog post per
 week.&lt;/p&gt;
 &lt;p&gt;I was sitting at the desktop watching random videos on the Internet
 this morning, then all of a sudden I felt hollow. I realized I would

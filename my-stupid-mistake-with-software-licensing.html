@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>My Stupid Mistake with Software Licensing - Liuw's Thinkpad</title>	
+	<meta name="author" content="Wei Liu">
+	
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0">
+	
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:700,400|Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="http://blog.liuw.name/theme/css/main.css" type="text/css" />
+		
+	<!--[if lt IE 9]>
+		<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+	
+	<link href="http://blog.liuw.name/" type="application/atom+xml" rel="alternate" title="Liuw's Thinkpad ATOM Feed" />
+	<link href="http://blog.liuw.name/feeds/all.rss.xml" type="application/atom+xml" rel="alternate" title="Liuw's Thinkpad RSS Feed" />
+</head>
+	
+<body>		
+	<header class="clearfix" role="banner">
+		<div class="wrapper">
+			<h1 class="huge"><a href="http://blog.liuw.name">Liuw's Thinkpad</a></h1>
+		</div>
+	</header>
+	
+<div role="main" class="content clearfix">	
+	<article>
+		<div class="post wrapper">
+			<h1>My Stupid Mistake with Software Licensing</h1>
+			<p>Never thought I would paint myself into a corner like this.</p>
+<p>I work on open source project for a living. I like the idea that my
+code is generally useful. I care how my code is being used to a
+degree, but I'm definitely not a strong supporter of one particular
+franchise of open source camp. Instead, I carefully avoid arguments
+about different ideologies and / or definitions about open source /
+free software. Those are difficult questions. Though they are very
+important, I would rather spend my time somewhere else on more
+productive stuff.</p>
+<p>My strategy has served me well. I sometimes read the license of the
+projects I contribute to. But all in all, I don't care that much. I
+believe most people are just like me, they want to do cool
+stuff. What's inside the license file isn't at all the critical to
+making a contribution. And to clarify my position, software, open
+source or not, it is a mean (however critical it is) to move forward
+human civilization, not an end in itself.</p>
+<p>Things changed recently. I got involved with BSD family more
+often. That causes quite a bit of headache for me. Everyone knows a
+good software engineer should reuse as much code as possible. So when
+I try to contribute to BSD, I always think to import some code I write
+for Linux. But first and foremost, we need to get the license
+straight. Unfortunately there is quite a bit of ambiguity in the
+licensing of the code I want to pull in.</p>
+<p>So I discussed with team members about potential issues, spent almost
+half an hour with a colleague figuring out what the actual license of
+some modules should be, and ventured to write several one-liner
+patches to fix them to reflect reality.</p>
+<p>And that, of course, didn't end well. Everyone knew the current
+situation is not ideal, but as every other discussions regarding
+license, it quickly got derailed into several directions: discussion
+whether one particular license exists or not, suggestion that I should
+leave it as-is, suggestion I should copy all rights holders (for the
+record I didn't agree because I was merely fixing bugs).  I drafted
+one reply or two, but in the end I deleted them because I just didn't
+think that's going to be productive in any way.</p>
+<p>The cost of any license related patch is too high. Not that writing
+a one-liner patch is particularly hard labor. It is the ensuing
+endless discussion that makes it so tiresome. No wonder everybody
+seems to avoid such topic as hard as they can.</p>
+<p>All in all, I think I made a stupid mistake to even dare writing such
+patches. There are a lot of more interesting and pressing problems to
+be solved. That's where I should divert my energy to.</p>
+<p>Happy hacking, not happy arguing.</p>
+			
+			<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+						
+			
+		</div>
+	
+<div class="meta wrapper">
+	<time datetime="2016-01-22T23:45:00+00:00" pubdate>Fri 22 January 2016</time>
+	<ul class="tag clearfix">
+		<li><a href="http://blog.liuw.name/category/tech.html">Tech</a></li>
+	</ul>
+</div>	</article>	
+</div>
+	
+		
+<footer class="clearfix">
+	<div class="wrapper pages">
+		<ul class="nav">
+			<li><a href="http://blog.liuw.name/pages/about.html">About</a></li>
+			<li><a href="http://blog.liuw.name/archives.html">Archive</a></li>
+		</ul>
+	</div>
+	
+	<div class="copy wrapper">
+		<ul class="social">
+		</ul>
+	
+		<p role="contentinfo">© 2012 - 2015 Wei Liu<br>
+		Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">Pelican</a>.</p>
+	</div>
+</footer>
+	
+	<script>
+	  var _gaq=[['_setAccount',''],['_trackPageview']];
+	  (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+	  g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+	  s.parentNode.insertBefore(g,s)}(document,'script'));
+	</script>
+</body>
+</html>
