@@ -1,181 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="">	
 <head>
-        <meta charset="utf-8" />
-        <title>A Pelican Blog - Tech</title>
-        <link rel="stylesheet" href="/theme/css/main.css" />
-        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="A Pelican Blog Atom Feed" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+	<meta charset="utf-8"/>
+	<title>Tech - Liuw's Thinkpad</title>	
+	<meta name="author" content="Wei Liu">
+	
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0">
+	
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:700,400|Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="http://blog.liuw.name/theme/css/main.css" type="text/css" />
+		
+	<!--[if lt IE 9]>
+		<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+	
+	<link href="http://blog.liuw.name/" type="application/atom+xml" rel="alternate" title="Liuw's Thinkpad ATOM Feed" />
+	<link href="http://blog.liuw.name/feeds/all.rss.xml" type="application/atom+xml" rel="alternate" title="Liuw's Thinkpad RSS Feed" />
 </head>
+	
+<body>		
+	<header class="clearfix" role="banner">
+		<div class="wrapper">
+			<h1 class="huge"><a href="http://blog.liuw.name">Liuw's Thinkpad</a></h1>
+		</div>
+	</header>
+	
+<div role="main" class="content clearfix">
+<div class="wrapper main">		
+	<h2>Posts categorized under: Tech</h2>
+	
+	<ol class="archive">
+		<li class="clearfix"><a href="http://blog.liuw.name/my-stupid-mistake-with-software-licensing.html"><time datetime="2016-01-22T23:45:00+00:00" pubdate>Fri 22 January 2016</time> My Stupid Mistake with Software Licensing</a></li>
+		<li class="clearfix"><a href="http://blog.liuw.name/anatomy-of-xen-alternative-infrastructure.html"><time datetime="2014-08-29T15:03:00+01:00" pubdate>Fri 29 August 2014</time> Anatomy of Xen Alternative Infrastructure</a></li>
+		<li class="clearfix"><a href="http://blog.liuw.name/two-years-as-open-source-software-developer-retrospect-and-forward-looking.html"><time datetime="2014-05-05T19:18:00+01:00" pubdate>Mon 05 May 2014</time> Two Years as Open Source Software Developer, Retrospect and Forward-looking</a></li>
+		<li class="clearfix"><a href="http://blog.liuw.name/fix-debian-wheezys-openswan-regression-with-apple-devices.html"><time datetime="2014-05-04T23:40:00+01:00" pubdate>Sun 04 May 2014</time> Fix Debian Wheezy's Openswan Regression with Apple Devices</a></li>
+	</ol>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="/">A Pelican Blog </a></h1>
-                <nav><ul>
-                    <li><a href="/pages/about.html">About</a></li>
-                    <li><a href="/category/functional-programming.html">Functional Programming</a></li>
-                    <li><a href="/category/life.html">Life</a></li>
-                    <li><a href="/category/misc.html">Misc</a></li>
-                    <li class="active"><a href="/category/tech.html">Tech</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
-
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/my-stupid-mistake-with-software-licensing.html">My Stupid Mistake with Software Licensing</a></h1>
-<footer class="post-info">
-        <abbr class="published" title="2016-01-22T23:45:00+00:00">
-                Published: Fri 22 January 2016
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/wei-liu.html">Wei Liu</a>
-        </address>
-<p>In <a href="/category/tech.html">Tech</a>.</p>
-
-</footer><!-- /.post-info --><p>Never thought I would paint myself into a corner like this.</p>
-<p>I work on open source project for a living. I like the idea that my
-code is generally useful. I care how my code is being used to a
-degree, but I'm definitely not a strong supporter of one particular
-franchise of open source camp. Instead, I carefully avoid arguments
-about different ideologies and / or definitions about open source /
-free software. Those are difficult questions. Though they are very
-important, I would rather spend my time somewhere else on more
-productive stuff.</p>
-<p>My strategy has served me well. I sometimes read the license of the
-projects I contribute to. But all in all, I don't care that much. I
-believe most people are just like me, they want to do cool
-stuff. What's inside the license file isn't at all the critical to
-making a contribution. And to clarify my position, software, open
-source or not, it is a mean (however critical it is) to move forward
-human civilization, not an end in itself.</p>
-<p>Things changed recently. I got involved with BSD family more
-often. That causes quite a bit of headache for me. Everyone knows a
-good software engineer should reuse as much code as possible. So when
-I try to contribute to BSD, I always think to import some code I write
-for Linux. But first and foremost, we need to get the license
-straight. Unfortunately there is quite a bit of ambiguity in the
-licensing of the code I want to pull in.</p>
-<p>So I discussed with team members about potential issues, spent almost
-half an hour with a colleague figuring out what the actual license of
-some modules should be, and ventured to write several one-liner
-patches to fix them to reflect reality.</p>
-<p>And that, of course, didn't end well. Everyone knew the current
-situation is not ideal, but as every other discussions regarding
-license, it quickly got derailed into several directions: discussion
-whether one particular license exists or not, suggestion that I should
-leave it as-is, suggestion I should copy all rights holders (for the
-record I didn't agree because I was merely fixing bugs).  I drafted
-one reply or two, but in the end I deleted them because I just didn't
-think that's going to be productive in any way.</p>
-<p>The cost of any license related patch is too high. Not that writing
-a one-liner patch is particularly hard labor. It is the ensuing
-endless discussion that makes it so tiresome. No wonder everybody
-seems to avoid such topic as hard as they can.</p>
-<p>All in all, I think I made a stupid mistake to even dare writing such
-patches. There are a lot of more interesting and pressing problems to
-be solved. That's where I should divert my energy to.</p>
-<p>Happy hacking, not happy arguing.</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/anatomy-of-xen-alternative-infrastructure.html" rel="bookmark"
-                           title="Permalink to Anatomy of Xen Alternative Infrastructure">Anatomy of Xen Alternative Infrastructure</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-08-29T15:03:00+00:00">
-                Published: Fri 29 August 2014
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/wei-liu.html">Wei Liu</a>
-        </address>
-<p>In <a href="/category/tech.html">Tech</a>.</p>
-
-</footer><!-- /.post-info -->                <p>Frankly speaking I think the name "alternative" is a bit unclear to
-outsider. It's used to patch kernel raw machine code during
-runtime. Why is it useful? It gives you a chance to selectively patch
-machine code according to CPU features and vendors.</p>
-<p>Xen borrows a stripped down version ...</p>
-                <a class="readmore" href="/anatomy-of-xen-alternative-infrastructure.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/two-years-as-open-source-software-developer-retrospect-and-forward-looking.html" rel="bookmark"
-                           title="Permalink to Two Years as Open Source Software Developer, Retrospect and Forward-looking">Two Years as Open Source Software Developer, Retrospect and Forward-looking</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-05-05T19:18:00+00:00">
-                Published: Mon 05 May 2014
-        </abbr>
-
-<p>In <a href="/category/tech.html">Tech</a>.</p>
-
-</footer><!-- /.post-info -->                <p>I've been a developer for open source
-<a href="http://www.xenproject.org">Xen Project</a> for two years, and I also
-help develop <a href="http://github.com/pythoncn/june">June</a> in my spare
-time. What I've learned so far is that running a (proper) open source
-project is never an easy task.</p>
-<p><em>Open Source</em> means different thing to different people ...</p>
-                <a class="readmore" href="/two-years-as-open-source-software-developer-retrospect-and-forward-looking.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/fix-debian-wheezys-openswan-regression-with-apple-devices.html" rel="bookmark"
-                           title="Permalink to Fix Debian Wheezy's Openswan Regression with Apple Devices">Fix Debian Wheezy's Openswan Regression with Apple Devices</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-05-04T23:40:00+00:00">
-                Published: Sun 04 May 2014
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/wei-liu.html">Wei Liu</a>
-        </address>
-<p>In <a href="/category/tech.html">Tech</a>.</p>
-
-</footer><!-- /.post-info -->                <p>In late March Debian Security team pushed a security update to Openswan package in Wheezy. My Macbook Air cannot connect to Openswan anymore after upgrading.</p>
-<p>I searched a bit and found out that somebody already filed a bug report on Debian bug tracker: <a href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=744717"> bug 744717 </a>. There's also a report ...</p>
-                <a class="readmore" href="/fix-debian-wheezys-openswan-regression-with-apple-devices.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-                </section><!-- /#content -->
-        <section id="extras" class="body">
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
-
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
-
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
+</div>
+</div>
+	
+		
+<footer class="clearfix">
+	<div class="wrapper pages">
+		<ul class="nav">
+			<li><a href="http://blog.liuw.name/pages/about.html">About</a></li>
+			<li><a href="http://blog.liuw.name/archives.html">Archive</a></li>
+		</ul>
+	</div>
+	
+	<div class="copy wrapper">
+		<ul class="social">
+		</ul>
+	
+		<p role="contentinfo">© 2012 - 2015 Wei Liu<br>
+		Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">Pelican</a>.</p>
+	</div>
+</footer>
+	
+	<script>
+	  var _gaq=[['_setAccount',''],['_trackPageview']];
+	  (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+	  g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+	  s.parentNode.insertBefore(g,s)}(document,'script'));
+	</script>
 </body>
 </html>
