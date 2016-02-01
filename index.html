@@ -1,92 +1,415 @@
-<!doctype html>
-<html lang="">	
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<meta charset="utf-8"/>
-	<title>Liuw's Thinkpad</title>	
-	<meta name="author" content="Wei Liu">
-	
-	<meta name="HandheldFriendly" content="True">
-	<meta name="MobileOptimized" content="320">
-	<meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0">
-	
-	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:700,400|Droid+Sans+Mono' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="http://blog.liuw.name/theme/css/main.css" type="text/css" />
-		
-	<!--[if lt IE 9]>
-		<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-	
-	
-	<link href="http://blog.liuw.name/" type="application/atom+xml" rel="alternate" title="Liuw's Thinkpad ATOM Feed" />
-	<link href="http://blog.liuw.name/feeds/all.rss.xml" type="application/atom+xml" rel="alternate" title="Liuw's Thinkpad RSS Feed" />
-</head>
-	
-<body>		
-	<header class="clearfix" role="banner">
-		<div class="wrapper">
-			<h1 class="huge"><a href="http://blog.liuw.name">Liuw's Thinkpad</a></h1>
-		</div>
-	</header>
-	
-<div role="main" class="content clearfix">
+        <meta charset="utf-8" />
+        <title>A Pelican Blog</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="A Pelican Blog Atom Feed" />
 
-	<article class="wrapper main">
-		<h1><a href="http://blog.liuw.name/my-stupid-mistake-with-software-licensing.html">My Stupid Mistake with Software Licensing</a></h1>
-		<p>Never thought I would paint myself into a corner like this.</p>
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">A Pelican Blog </a></h1>
+                <nav><ul>
+                    <li><a href="/pages/about.html">About</a></li>
+                    <li><a href="/category/functional-programming.html">Functional Programming</a></li>
+                    <li><a href="/category/life.html">Life</a></li>
+                    <li><a href="/category/misc.html">Misc</a></li>
+                    <li><a href="/category/mise.html">Mise</a></li>
+                    <li><a href="/category/tech.html">Tech</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/prepare-myself-for-stupid-questions.html">Prepare Myself for "Stupid" Questions</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2016-01-30T23:40:00+00:00">
+                Published: Sat 30 January 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/wei-liu.html">Wei Liu</a>
+        </address>
+<p>In <a href="/category/mise.html">Mise</a>.</p>
+
+</footer><!-- /.post-info --><p>We had a booth at one open source conference with a wide ranges of
+open source software users. It is good to talk to end users from time
+to time, because when you're isolated for too long from end users you
+don't know how they perceive the project.</p>
+<p>We got all sorts of questions. I considered some high quality and some
+"stupid". In the end, all questions need to be answered, otherwise we
+look stupid ourselves.</p>
+<p>By "stupid questions", I mean the questions that are so wrong that
+you don't even know where to start. But the user actually thinks the
+question is legit. I think we normally handle high quality questions
+very well because both sides know what they are doing. It's the
+"stupid" questions that we handle badly from time to time.</p>
+<p>It's not very good tactic to try to educate the user from ground up
+and try to rectify their understanding, because we don't have that
+much time and the user is not here to receive a lecture. Another
+aspect is that by rectifying all the errors you actually make the
+other side feel stupid while originally he or she might actually be
+feeling good and wishing to engage.</p>
+<p>The best way I can think of thus far is to use analogies. For example,
+one user asks, "can product A generate an intermediate medium that can be
+consumed be product B because the underlying technology is the same?"
+The analogy would be "no, it can't because it would be requiring BSD
+binary to run on Linux. The underlying format is ELF on both platforms
+but there are things that just don't allow to do that." Use things
+user can relate to to make them quickly grasp the idea.</p>
+<p>It does take some effort to improvise analogies on the spot,
+though, but as least I have a way to deal with those questions now.</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/my-stupid-mistake-with-software-licensing.html" rel="bookmark"
+                           title="Permalink to My Stupid Mistake with Software Licensing">My Stupid Mistake with Software Licensing</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2016-01-22T23:45:00+00:00">
+                Published: Fri 22 January 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/wei-liu.html">Wei Liu</a>
+        </address>
+<p>In <a href="/category/tech.html">Tech</a>.</p>
+
+</footer><!-- /.post-info -->                <p>Never thought I would paint myself into a corner like this.</p>
 <p>I work on open source project for a living. I like the idea that my
 code is generally useful. I care how my code is being used to a
-degree, but I'm definitely not a strong supporter of ...</p> <a class="btn" href="http://blog.liuw.name/my-stupid-mistake-with-software-licensing.html">read more →</a>
-	</article>
+degree, but I'm definitely not a strong supporter of ...</p>
+                <a class="readmore" href="/my-stupid-mistake-with-software-licensing.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
-	<div class="wrapper main">		
-		<h3>More posts</h3>
-		<ol class="archive">
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/one-post-per-week.html" rel="bookmark"
+                           title="Permalink to One Post per Week">One Post per Week</a></h1>
+                </header>
 
-			<li class="clearfix"><a href="http://blog.liuw.name/one-post-per-week.html" rel="bookmark" title="Permalink to One Post per Week"><time datetime="2016-01-16T22:28:00+00:00" pubdate>Sat 16 January 2016</time> One Post per Week</a></li>
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2016-01-16T22:28:00+00:00">
+                Published: Sat 16 January 2016
+        </abbr>
 
-			<li class="clearfix"><a href="http://blog.liuw.name/on-interaction-with-open-source-communities.html" rel="bookmark" title="Permalink to On Interaction with Open Source Communities"><time datetime="2015-11-26T23:23:00+00:00" pubdate>Thu 26 November 2015</time> On Interaction with Open Source Communities</a></li>
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/wei-liu.html">Wei Liu</a>
+        </address>
+<p>In <a href="/category/misc.html">Misc</a>.</p>
 
-			<li class="clearfix"><a href="http://blog.liuw.name/securing-my-pet-vms.html" rel="bookmark" title="Permalink to Securing My Pet VMs"><time datetime="2015-11-23T23:49:00+00:00" pubdate>Mon 23 November 2015</time> Securing My Pet VMs</a></li>
+</footer><!-- /.post-info -->                <p>I'm now setting a new resolution: I plan to write one blog post per
+week.</p>
+<p>I was sitting at the desktop watching random videos on the Internet
+this morning, then all of a sudden I felt hollow. I realized I would
+have wasted quite a lot of time just ...</p>
+                <a class="readmore" href="/one-post-per-week.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
-			<li class="clearfix"><a href="http://blog.liuw.name/free-software-is-not-free.html" rel="bookmark" title="Permalink to Free Software is not Free"><time datetime="2015-11-16T22:30:00+00:00" pubdate>Mon 16 November 2015</time> Free Software is not Free</a></li>
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/on-interaction-with-open-source-communities.html" rel="bookmark"
+                           title="Permalink to On Interaction with Open Source Communities">On Interaction with Open Source Communities</a></h1>
+                </header>
 
-			<li class="clearfix"><a href="http://blog.liuw.name/of-course-joanna-is-right.html" rel="bookmark" title="Permalink to Of Course Joanna is Right"><time datetime="2015-11-01T14:50:00+00:00" pubdate>Sun 01 November 2015</time> Of Course Joanna is Right</a></li>
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2015-11-26T23:23:00+00:00">
+                Published: Thu 26 November 2015
+        </abbr>
 
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/wei-liu.html">Wei Liu</a>
+        </address>
+<p>In <a href="/category/misc.html">Misc</a>.</p>
 
+</footer><!-- /.post-info -->                <p>During our regular meeting my colleague said he learned a lot during a
+trip to one of our vendors, much more than he had expected. One of the
+many eye opening learnings is that it is actually quite intimidating
+to interact with open source communities.</p>
+<p>It is true that it ...</p>
+                <a class="readmore" href="/on-interaction-with-open-source-communities.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/securing-my-pet-vms.html" rel="bookmark"
+                           title="Permalink to Securing My Pet VMs">Securing My Pet VMs</a></h1>
+                </header>
 
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2015-11-23T23:49:00+00:00">
+                Published: Mon 23 November 2015
+        </abbr>
 
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/wei-liu.html">Wei Liu</a>
+        </address>
+<p>In <a href="/category/misc.html">Misc</a>.</p>
 
+</footer><!-- /.post-info -->                <p>I have a number of (0 to 3, depending on conditions) pet VMs running
+somewhere in the "cloud".</p>
+<p>I don't want to become a 24x7 system administrator myself. I have far
+more important things to do in my day to day life. On the other hand,
+I have valuable ...</p>
+                <a class="readmore" href="/securing-my-pet-vms.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
-		</ol>
-		
-		<p>More posts in the <a href="http://blog.liuw.name/archives.html">archive</a>.</p>
-	</div>
-</div>
-	
-		
-<footer class="clearfix">
-	<div class="wrapper pages">
-		<ul class="nav">
-			<li><a href="http://blog.liuw.name/pages/about.html">About</a></li>
-			<li><a href="http://blog.liuw.name/archives.html">Archive</a></li>
-		</ul>
-	</div>
-	
-	<div class="copy wrapper">
-		<ul class="social">
-		</ul>
-	
-		<p role="contentinfo">© 2012 - 2015 Wei Liu<br>
-		Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">Pelican</a>.</p>
-	</div>
-</footer>
-	
-	<script>
-	  var _gaq=[['_setAccount',''],['_trackPageview']];
-	  (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-	  g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-	  s.parentNode.insertBefore(g,s)}(document,'script'));
-	</script>
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/free-software-is-not-free.html" rel="bookmark"
+                           title="Permalink to Free Software is not Free">Free Software is not Free</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2015-11-16T22:30:00+00:00">
+                Published: Mon 16 November 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/wei-liu.html">Wei Liu</a>
+        </address>
+<p>In <a href="/category/misc.html">Misc</a>.</p>
+
+</footer><!-- /.post-info -->                <p>There has been some back and forth discussion on how Xen's security process
+sucks. Well, not quite. Though the email was titled that way, the content
+didn't have much to do with security process per se. True, there are
+technically correct points in that thread (with which I ...</p>
+                <a class="readmore" href="/free-software-is-not-free.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/of-course-joanna-is-right.html" rel="bookmark"
+                           title="Permalink to Of Course Joanna is Right">Of Course Joanna is Right</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2015-11-01T14:50:00+00:00">
+                Published: Sun 01 November 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/wei-liu.html">Wei Liu</a>
+        </address>
+<p>In <a href="/category/misc.html">Misc</a>.</p>
+
+</footer><!-- /.post-info -->                <p>There have been quite a lot of Xen-bashing for XSA-148. It's no doubt a cluster-fuck, a reflection of the sad state of the art of computer system security. </p>
+<p>As Ian pointed out in his blog post, we collectively choose features over security. Security only matters when there is a ...</p>
+                <a class="readmore" href="/of-course-joanna-is-right.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/on-toxicity-on-lkml.html" rel="bookmark"
+                           title="Permalink to On Toxicity on LKML">On Toxicity on LKML</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2015-10-18T23:50:00+00:00">
+                Published: Sun 18 October 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/wei-liu.html">Wei Liu</a>
+        </address>
+<p>In <a href="/category/misc.html">Misc</a>.</p>
+
+</footer><!-- /.post-info -->                <p>Sarah Sharp quit, publicly.</p>
+<p>Just to be clear: I don't know her personally. The closest link she and I ever had was that I participated in Outreachy (formally known as Outreach Program for Women) as a mentor, where she had been one of the coordinators for some time.</p>
+<p>I ...</p>
+                <a class="readmore" href="/on-toxicity-on-lkml.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/anatomy-of-xen-alternative-infrastructure.html" rel="bookmark"
+                           title="Permalink to Anatomy of Xen Alternative Infrastructure">Anatomy of Xen Alternative Infrastructure</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-08-29T15:03:00+00:00">
+                Published: Fri 29 August 2014
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/wei-liu.html">Wei Liu</a>
+        </address>
+<p>In <a href="/category/tech.html">Tech</a>.</p>
+
+</footer><!-- /.post-info -->                <p>Frankly speaking I think the name "alternative" is a bit unclear to
+outsider. It's used to patch kernel raw machine code during
+runtime. Why is it useful? It gives you a chance to selectively patch
+machine code according to CPU features and vendors.</p>
+<p>Xen borrows a stripped down version ...</p>
+                <a class="readmore" href="/anatomy-of-xen-alternative-infrastructure.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/clock-is-monoid.html" rel="bookmark"
+                           title="Permalink to Clock is monoid">Clock is monoid</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-08-12T23:10:00+00:00">
+                Published: Tue 12 August 2014
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/wei-liu.html">Wei Liu</a>
+        </address>
+<p>In <a href="/category/functional-programming.html">Functional Programming</a>.</p>
+
+</footer><!-- /.post-info -->                <p>I bumped into "functional programming" several times during my years in college
+and now I'm planning to spend serious effort in learning it. My language of
+choice, after evaluating several, is Haskell.</p>
+<p>But this post is not about Haskell. I mentioned Haskell because I encountered
+many mathmatical concepts when ...</p>
+                <a class="readmore" href="/clock-is-monoid.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/the-captcha-economy.html" rel="bookmark"
+                           title="Permalink to The CAPTCHA Economy">The CAPTCHA Economy</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-05-17T10:50:00+00:00">
+                Published: Sat 17 May 2014
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/wei-liu.html">Wei Liu</a>
+        </address>
+<p>In <a href="/category/misc.html">Misc</a>.</p>
+
+</footer><!-- /.post-info -->                <p>During daily lunch time chat yesterday in the office kitchen, my friend told me about a service he has been using for a while. And that provoked me to look further into this and discovered some interesting facts. Though not all of my questions about that service have been answered ...</p>
+                <a class="readmore" href="/the-captcha-economy.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/two-years-as-open-source-software-developer-retrospect-and-forward-looking.html" rel="bookmark"
+                           title="Permalink to Two Years as Open Source Software Developer, Retrospect and Forward-looking">Two Years as Open Source Software Developer, Retrospect and Forward-looking</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-05-05T19:18:00+00:00">
+                Published: Mon 05 May 2014
+        </abbr>
+
+<p>In <a href="/category/tech.html">Tech</a>.</p>
+
+</footer><!-- /.post-info -->                <p>I've been a developer for open source
+<a href="http://www.xenproject.org">Xen Project</a> for two years, and I also
+help develop <a href="http://github.com/pythoncn/june">June</a> in my spare
+time. What I've learned so far is that running a (proper) open source
+project is never an easy task.</p>
+<p><em>Open Source</em> means different thing to different people ...</p>
+                <a class="readmore" href="/two-years-as-open-source-software-developer-retrospect-and-forward-looking.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/fix-debian-wheezys-openswan-regression-with-apple-devices.html" rel="bookmark"
+                           title="Permalink to Fix Debian Wheezy's Openswan Regression with Apple Devices">Fix Debian Wheezy's Openswan Regression with Apple Devices</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-05-04T23:40:00+00:00">
+                Published: Sun 04 May 2014
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/wei-liu.html">Wei Liu</a>
+        </address>
+<p>In <a href="/category/tech.html">Tech</a>.</p>
+
+</footer><!-- /.post-info -->                <p>In late March Debian Security team pushed a security update to Openswan package in Wheezy. My Macbook Air cannot connect to Openswan anymore after upgrading.</p>
+<p>I searched a bit and found out that somebody already filed a bug report on Debian bug tracker: <a href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=744717"> bug 744717 </a>. There's also a report ...</p>
+                <a class="readmore" href="/fix-debian-wheezys-openswan-regression-with-apple-devices.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2012-year-end-review.html" rel="bookmark"
+                           title="Permalink to 2012年终总结">2012年终总结</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2012-12-28T20:40:00+00:00">
+                Published: Fri 28 December 2012
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/wei-liu.html">Wei Liu</a>
+        </address>
+<p>In <a href="/category/life.html">Life</a>.</p>
+
+</footer><!-- /.post-info -->                <p>由于2012年12月31日是周一，是一个工作日，估计到时也没有时间来写blog了，所以趁着周末来写一下吧。</p>
+<p>上一个基于Wordpress的blog，由于VPS到期，大家都没打算继续在其上投资，所以下线了。之后我便萌生了改用如Pelican、Octopress、Hyde以及Jekyll这样的静态blog系统的想法。在七到九月间进行了一些尝试，但是鉴于Wordpress中使用了一些插件以及一些格式上的问题，旧文章的转换效果总是不尽如人意。而我自己又比较懒于重复造轮子，所以重新开blog的计划就一直拖到了现在。</p>
+<p>现今已经是年末，再不动手只怕这个事情要从Todo list移动到Undo list，最后到Never-do list了，所以还是快点动手吧。现在选了自己比较熟悉的Python做的Pelican，先从头开始写。旧blog中的一些文章，若是我想到比较有用或者有意思的，会手工转到Pelican中来。</p>
+<p>每个人的一年，都有不同的精彩和失落，但是最后总可以总结到一句话：如人饮水，冷暖自知。文字写多了，也不免变成流水账，乏味得让人犯困。所以鸡毛蒜皮的事情我就不写了，只记重要的事情。</p>
+<p>一到四月的时候，在剑桥实习。春节自然是没有回家，虽然有12天的假期，但是机票委实太贵，加之去年十一月末出来的时候已经在家待过一周，所以最后还是选择留下继续工作。总的来说，实习的表现还不错。当时的想法就是挑战一下自己看能不能在四个月之内把这么大的一个坑填上，可惜network I ...</p>
+                <a class="readmore" href="/2012-year-end-review.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
 </body>
 </html>
