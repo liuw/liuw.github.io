@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Liuw's Thinkpad</title><link>http://blog.liuw.name/</link><description></description><atom:link href="http://blog.liuw.name/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 22 Jan 2016 23:45:00 +0000</lastBuildDate><item><title>My Stupid Mistake with Software Licensing</title><link>http://blog.liuw.name/my-stupid-mistake-with-software-licensing.html</link><description>&lt;p&gt;Never thought I would paint myself into a corner like this.&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Liuw's Thinkpad</title><link>http://blog.liuw.name/</link><description></description><atom:link href="http://blog.liuw.name/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Sat, 30 Jan 2016 23:40:00 +0000</lastBuildDate><item><title>Prepare Myself for "Stupid" Questions</title><link>http://blog.liuw.name/prepare-myself-for-stupid-questions.html</link><description>&lt;p&gt;We had a booth at one open source conference with a wide ranges of
+open source software users. It is good to talk to end users from time
+to time, because when you're isolated for too long from end users you
+don't know how they perceive the project.&lt;/p&gt;
+&lt;p&gt;We got all sorts of questions. I considered some high quality and some
+"stupid". In the end, all questions need to be answered, otherwise we
+look stupid ourselves.&lt;/p&gt;
+&lt;p&gt;By "stupid questions", I mean the questions that are so wrong that
+you don't even know where to start. But the user actually thinks the
+question is legit. I think we normally handle high quality questions
+very well because both sides know what they are doing. It's the
+"stupid" questions that we handle badly from time to time.&lt;/p&gt;
+&lt;p&gt;It's not very good tactic to try to educate the user from ground up
+and try to rectify their understanding, because we don't have that
+much time and the user is not here to receive a lecture. Another
+aspect is that by rectifying all the errors you actually make the
+other side feel stupid while originally he or she might actually be
+feeling good and wishing to engage.&lt;/p&gt;
+&lt;p&gt;The best way I can think of thus far is to use analogies. For example,
+one user asks, "can product A generate an intermediate medium that can be
+consumed be product B because the underlying technology is the same?"
+The analogy would be "no, it can't because it would be requiring BSD
+binary to run on Linux. The underlying format is ELF on both platforms
+but there are things that just don't allow to do that." Use things
+user can relate to to make them quickly grasp the idea.&lt;/p&gt;
+&lt;p&gt;It does take some effort to improvise analogies on the spot,
+though, but as least I have a way to deal with those questions now.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Wei Liu</dc:creator><pubDate>Sat, 30 Jan 2016 23:40:00 +0000</pubDate><guid>tag:blog.liuw.name,2016-01-30:prepare-myself-for-stupid-questions.html</guid></item><item><title>My Stupid Mistake with Software Licensing</title><link>http://blog.liuw.name/my-stupid-mistake-with-software-licensing.html</link><description>&lt;p&gt;Never thought I would paint myself into a corner like this.&lt;/p&gt;
 &lt;p&gt;I work on open source project for a living. I like the idea that my
 code is generally useful. I care how my code is being used to a
 degree, but I'm definitely not a strong supporter of one particular

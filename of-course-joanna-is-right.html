@@ -1,75 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="">	
 <head>
-        <meta charset="utf-8" />
-        <title>Of Course Joanna is Right</title>
-        <link rel="stylesheet" href="/theme/css/main.css" />
-        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="A Pelican Blog Atom Feed" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+	<meta charset="utf-8"/>
+	<title>Of Course Joanna is Right - Liuw's Thinkpad</title>	
+	<meta name="author" content="Wei Liu">
+	
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0">
+	
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:700,400|Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="http://blog.liuw.name/theme/css/main.css" type="text/css" />
+		
+	<!--[if lt IE 9]>
+		<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+	
+	<link href="http://blog.liuw.name/" type="application/atom+xml" rel="alternate" title="Liuw's Thinkpad ATOM Feed" />
+	<link href="http://blog.liuw.name/feeds/all.rss.xml" type="application/atom+xml" rel="alternate" title="Liuw's Thinkpad RSS Feed" />
 </head>
-
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="/">A Pelican Blog </a></h1>
-                <nav><ul>
-                    <li><a href="/pages/about.html">About</a></li>
-                    <li><a href="/category/functional-programming.html">Functional Programming</a></li>
-                    <li><a href="/category/life.html">Life</a></li>
-                    <li class="active"><a href="/category/misc.html">Misc</a></li>
-                    <li><a href="/category/mise.html">Mise</a></li>
-                    <li><a href="/category/tech.html">Tech</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
-<section id="content" class="body">
-  <article>
-    <header>
-      <h1 class="entry-title">
-        <a href="/of-course-joanna-is-right.html" rel="bookmark"
-           title="Permalink to Of Course Joanna is Right">Of Course Joanna is Right</a></h1>
-    </header>
-
-    <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2015-11-01T14:50:00+00:00">
-                Published: Sun 01 November 2015
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/wei-liu.html">Wei Liu</a>
-        </address>
-<p>In <a href="/category/misc.html">Misc</a>.</p>
-
-</footer><!-- /.post-info -->      <p>There have been quite a lot of Xen-bashing for XSA-148. It's no doubt a cluster-fuck, a reflection of the sad state of the art of computer system security. </p>
+	
+<body>		
+	<header class="clearfix" role="banner">
+		<div class="wrapper">
+			<h1 class="huge"><a href="http://blog.liuw.name">Liuw's Thinkpad</a></h1>
+		</div>
+	</header>
+	
+<div role="main" class="content clearfix">	
+	<article>
+		<div class="post wrapper">
+			<h1>Of Course Joanna is Right</h1>
+			<p>There have been quite a lot of Xen-bashing for XSA-148. It's no doubt a cluster-fuck, a reflection of the sad state of the art of computer system security. </p>
 <p>As Ian pointed out in his blog post, we collectively choose features over security. Security only matters when there is a big fuck-up like HeartBleed, ShellShock or XSA-148.</p>
 <p>What is even sadder is the attitude of media in general. Journalists actively hunt for headline-worth bugs. With the help of slightly technically incorrect writing that skews the true situation and some other implications along the way, they have many masterpieces that conclude the dismal state of computer system security. Not that they're wrong about the conclusion, just in my opinion they completely miss the important points. Remember VENOM? I didn't mention it in my list of big fuck-ups because it really wasn't anything serious except for its cool name. But media picked on that and started a spree nonetheless, just because the cool name fit right in their headline.</p>
 <p>So what's wrong with the world? In short, we really really really don't care about security. The effort of a small group of people pales in front of the a world that cares more about cool new shiny things.</p>
 <p>In my world view, this is a ever changing world. Software is under constant pressure to evolve to adapt to external environment. No software is perfect. There were, are and going to be major bugs in all seriously written software. </p>
 <p>If one thinks a piece of software is secure just because there is no public security advisories list, then he or she is delusional. Good luck with building things on top of that piece of software without investing significant amount of money performing security audit. And if the media picks on a piece of software because there is such a list, they are actually doing a disservice to the wider community. That drives projects to sweep problems under the carpet.</p>
 <p>Coming back to XSA-148, there is no excuse on Xen project's part. That's a serious bug, period. What should be done next is to use the correct process to avoid such error again, and in similar situation, minimise the impact. Xen community constantly work on procedural improvements, learn from the past and make the future better. A constructive way of moving forward is for Xen community to engage with security researchers to improve the security of Xen. I look forward to that.</p>
-    </div><!-- /.entry-content -->
-
-  </article>
-</section>
-        <section id="extras" class="body">
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
-
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
-
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
+			
+			<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+						
+			
+		</div>
+	
+<div class="meta wrapper">
+	<time datetime="2015-11-01T14:50:00+00:00" pubdate>Sun 01 November 2015</time>
+	<ul class="tag clearfix">
+		<li><a href="http://blog.liuw.name/category/misc.html">Misc</a></li>
+	</ul>
+</div>	</article>	
+</div>
+	
+		
+<footer class="clearfix">
+	<div class="wrapper pages">
+		<ul class="nav">
+			<li><a href="http://blog.liuw.name/pages/about.html">About</a></li>
+			<li><a href="http://blog.liuw.name/archives.html">Archive</a></li>
+		</ul>
+	</div>
+	
+	<div class="copy wrapper">
+		<ul class="social">
+		</ul>
+	
+		<p role="contentinfo">© 2012 - 2015 Wei Liu<br>
+		Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">Pelican</a>.</p>
+	</div>
+</footer>
+	
+	<script>
+	  var _gaq=[['_setAccount',''],['_trackPageview']];
+	  (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+	  g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+	  s.parentNode.insertBefore(g,s)}(document,'script'));
+	</script>
 </body>
 </html>

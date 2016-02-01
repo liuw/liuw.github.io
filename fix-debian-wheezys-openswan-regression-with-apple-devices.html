@@ -1,74 +1,81 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="">	
 <head>
-        <meta charset="utf-8" />
-        <title>Fix Debian Wheezy's Openswan Regression with Apple Devices</title>
-        <link rel="stylesheet" href="/theme/css/main.css" />
-        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="A Pelican Blog Atom Feed" />
-
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+	<meta charset="utf-8"/>
+	<title>Fix Debian Wheezy's Openswan Regression with Apple Devices - Liuw's Thinkpad</title>	
+	<meta name="author" content="Wei Liu">
+	
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0">
+	
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:700,400|Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="http://blog.liuw.name/theme/css/main.css" type="text/css" />
+		
+	<!--[if lt IE 9]>
+		<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+	
+	<link href="http://blog.liuw.name/" type="application/atom+xml" rel="alternate" title="Liuw's Thinkpad ATOM Feed" />
+	<link href="http://blog.liuw.name/feeds/all.rss.xml" type="application/atom+xml" rel="alternate" title="Liuw's Thinkpad RSS Feed" />
 </head>
-
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="/">A Pelican Blog </a></h1>
-                <nav><ul>
-                    <li><a href="/pages/about.html">About</a></li>
-                    <li><a href="/category/functional-programming.html">Functional Programming</a></li>
-                    <li><a href="/category/life.html">Life</a></li>
-                    <li><a href="/category/misc.html">Misc</a></li>
-                    <li><a href="/category/mise.html">Mise</a></li>
-                    <li class="active"><a href="/category/tech.html">Tech</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
-<section id="content" class="body">
-  <article>
-    <header>
-      <h1 class="entry-title">
-        <a href="/fix-debian-wheezys-openswan-regression-with-apple-devices.html" rel="bookmark"
-           title="Permalink to Fix Debian Wheezy's Openswan Regression with Apple Devices">Fix Debian Wheezy's Openswan Regression with Apple Devices</a></h1>
-    </header>
-
-    <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-05-04T23:40:00+00:00">
-                Published: Sun 04 May 2014
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/wei-liu.html">Wei Liu</a>
-        </address>
-<p>In <a href="/category/tech.html">Tech</a>.</p>
-
-</footer><!-- /.post-info -->      <p>In late March Debian Security team pushed a security update to Openswan package in Wheezy. My Macbook Air cannot connect to Openswan anymore after upgrading.</p>
+	
+<body>		
+	<header class="clearfix" role="banner">
+		<div class="wrapper">
+			<h1 class="huge"><a href="http://blog.liuw.name">Liuw's Thinkpad</a></h1>
+		</div>
+	</header>
+	
+<div role="main" class="content clearfix">	
+	<article>
+		<div class="post wrapper">
+			<h1>Fix Debian Wheezy's Openswan Regression with Apple Devices</h1>
+			<p>In late March Debian Security team pushed a security update to Openswan package in Wheezy. My Macbook Air cannot connect to Openswan anymore after upgrading.</p>
 <p>I searched a bit and found out that somebody already filed a bug report on Debian bug tracker: <a href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=744717"> bug 744717 </a>. There's also a report on Openswan's Github page to confirm this bug: <a href="https://github.com/xelerance/Openswan/issues/78">issue 78</a>.</p>
 <p>On Debian bug tracker a user named Liu DongMiao provided a patch and it was reported to work. I had a look at that patch but didn't quite like it, because it leaked a macro in C file, which is not a proper fix to me.</p>
 <p>The root cause of the problem is confilict in header file. Debian Security team removed ISAKMP_NEXT_NATD_BADDRAFTS. Then they had to comment out or remove some code to handle that flag, of which Apple devices make use. Unfortunately I cannot get Apple to fix their code so I have to fix mine.</p>
 <p>The fix is simplier than I thought. I compared upstream Openswan 2.6.37 with Wheezy's patched version, then restored the original flag and those code snippets. I was worried that the overriden new flag was used in code but it wasn't. I didn't touch changelog or version number of that package, so that when a new package is out it can be automatically updated when the maintainers push a new package to fix that bug.</p>
 <p>I have my <a href="../files/fix-osx-baddraft-flag.patch">patch</a> attached. If you want to know how to rebuild Debian package, <a href="https://www.debian.org/doc/manuals/maint-guide/index.en.html">Debian New Maintainers' Guide</a> is a good starting point.</p>
-    </div><!-- /.entry-content -->
-
-  </article>
-</section>
-        <section id="extras" class="body">
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
-
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
-
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
+			
+			<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+						
+			
+		</div>
+	
+<div class="meta wrapper">
+	<time datetime="2014-05-04T23:40:00+01:00" pubdate>Sun 04 May 2014</time>
+	<ul class="tag clearfix">
+		<li><a href="http://blog.liuw.name/category/tech.html">Tech</a></li>
+	</ul>
+</div>	</article>	
+</div>
+	
+		
+<footer class="clearfix">
+	<div class="wrapper pages">
+		<ul class="nav">
+			<li><a href="http://blog.liuw.name/pages/about.html">About</a></li>
+			<li><a href="http://blog.liuw.name/archives.html">Archive</a></li>
+		</ul>
+	</div>
+	
+	<div class="copy wrapper">
+		<ul class="social">
+		</ul>
+	
+		<p role="contentinfo">© 2012 - 2015 Wei Liu<br>
+		Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">Pelican</a>.</p>
+	</div>
+</footer>
+	
+	<script>
+	  var _gaq=[['_setAccount',''],['_trackPageview']];
+	  (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+	  g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+	  s.parentNode.insertBefore(g,s)}(document,'script'));
+	</script>
 </body>
 </html>
