@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Liuw's Thinkpad</title><link href="http://blog.liuw.name/" rel="alternate"></link><link href="http://blog.liuw.name/feeds/all-en.atom.xml" rel="self"></link><id>http://blog.liuw.name/</id><updated>2016-02-06T13:23:00+00:00</updated><entry><title>On Opinions</title><link href="http://blog.liuw.name/on-opinions.html" rel="alternate"></link><updated>2016-02-06T13:23:00+00:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2016-02-06:on-opinions.html</id><summary type="html">&lt;p&gt;I am normally a laid-back person. I don't care about many things that
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Liuw's Thinkpad</title><link href="http://blog.liuw.name/" rel="alternate"></link><link href="http://blog.liuw.name/feeds/all-en.atom.xml" rel="self"></link><id>http://blog.liuw.name/</id><updated>2016-02-12T14:45:00+00:00</updated><entry><title>Write the Features That are Used Everyday</title><link href="http://blog.liuw.name/write-the-features-that-are-used-everyday.html" rel="alternate"></link><updated>2016-02-12T14:45:00+00:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2016-02-12:write-the-features-that-are-used-everyday.html</id><summary type="html">&lt;p&gt;One of the things I learned during these years is that I should
+prioritise my work based on the possibility of that piece of work
+getting used by users. The more likely users use it (directly or
+indirectly), the more value and less maintenance burden there is.&lt;/p&gt;
+&lt;p&gt;The temptation of adding things we think is useful but without
+actually validating the idea first is dangerous. Each line of code is
+one line of liability. Code gets inevitably bit-rotten when nobody
+uses it. I've seen several examples myself, starting with the very
+feature I wrote.&lt;/p&gt;
+&lt;p&gt;Having no direct input from project managers and end users, it's a bit
+hard to imagine what would be useful or not. True, there are features
+that everyone thinks important, but many more are on the boarder line
+that we can't see immediate return of investment.&lt;/p&gt;
+&lt;p&gt;This is not to downplay features that are unclear whether users
+actually want but have strategic importance. Software needs to
+evolve. Users would like to see shiny new things. And sometimes we
+have to weight this factor in.&lt;/p&gt;
+&lt;p&gt;The experience of maintaining a piece of software helps me to become a
+better developer in that regard.  When having a new project idea, I no
+long rush to write the code. I spend more time weighting the
+usefulness and the maintenance burden. I think long and hard about the
+design. My goal, in the end, is to maximise the return value of my
+work -- to write features that get used everyday.&lt;/p&gt;</summary></entry><entry><title>On Opinions</title><link href="http://blog.liuw.name/on-opinions.html" rel="alternate"></link><updated>2016-02-06T13:23:00+00:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2016-02-06:on-opinions.html</id><summary type="html">&lt;p&gt;I am normally a laid-back person. I don't care about many things that
 are not related to me. Heck, I don't even care about that many things
 that are related to me. I say I have no opinion or no preference all
 the time.&lt;/p&gt;
