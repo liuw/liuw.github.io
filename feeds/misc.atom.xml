@@ -1,5 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Liuw's Thinkpad</title><link href="http://blog.liuw.name/" rel="alternate"></link><link href="http://blog.liuw.name/feeds/misc.atom.xml" rel="self"></link><id>http://blog.liuw.name/</id><updated>2016-02-06T13:23:00+00:00</updated><entry><title>On Opinions</title><link href="http://blog.liuw.name/on-opinions.html" rel="alternate"></link><updated>2016-02-06T13:23:00+00:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2016-02-06:on-opinions.html</id><summary type="html">&lt;p&gt;I am normally a laid-back person. I don't care about many things that
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Liuw's Thinkpad</title><link href="http://blog.liuw.name/" rel="alternate"></link><link href="http://blog.liuw.name/feeds/misc.atom.xml" rel="self"></link><id>http://blog.liuw.name/</id><updated>2016-02-17T00:24:00+00:00</updated><entry><title>The Internet of Useless Opinions</title><link href="http://blog.liuw.name/the-internet-of-useless-opinions.html" rel="alternate"></link><updated>2016-02-17T00:24:00+00:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2016-02-17:the-internet-of-useless-opinions.html</id><summary type="html">&lt;p&gt;Hacker News is one of the few sites I go to daily because I find
+majority of the submissions are of high quality. I seldom comment for
+various reasons (maybe I should expound that in another post), but I
+do enjoy reading interesting and insightful comments about how things
+work, less-well-known history and intellectual debates.&lt;/p&gt;
+&lt;p&gt;As with all other Internet forums, there are trolls, fanboys, fanatics
+and so on, so I see all sort of opinions. Strangely I never seem to
+have problems with opinions even if they seem most estranged,
+irrational, absurd or irritating. Those are, after all, opinions. And
+in my own humble opinion, the value of opinions from some random
+stranger on the Internet is close to zero. And yes, you SHOULD stop
+reading now if you don't know me.&lt;/p&gt;
+&lt;p&gt;I seem a bit cynical, but in fact I'm pragmatic. Anyone who wants to
+steer the world to his or her own direction should be busy doing
+things to make that actually happen. Being vocal on the Internet
+without actually doing anything is cheap.&lt;/p&gt;
+&lt;p&gt;I don't judge people from what they say on the Internet, of
+course. But sometimes when I read opinion like "We should do X because
+of Y", I do wonder if that person has ever done serious work in the
+field. To avoid having a straw man argument, we'd better have a look
+at concrete example.&lt;/p&gt;
+&lt;p&gt;Whenever a security bug related to memory safety shows up in system
+software written in C, there are people who claim "we should expunge
+all C code and rewrite everything in memory safe language because C is
+unsafe". Technically speaking I agree with them wholeheartedly.  I'm
+not being sarcastic here -- I try to use the right language for the
+right work in my day job, I've learned more than a dozen of languages
+over the years. C is terrible language, we do need better system level
+language(s). But basing argument for replacing C just on the language
+itself misses the whole picture. C has paramount tooling support, it
+has the right level of abstraction to work with a machine, the list
+goes on and on and on. Throwing away decades of effort is just
+unrealistic. Guess what, people who care have already rolled up their
+sleeves and started publishing code. Not sure how much of the code is
+written by the most vocal people on the Internet, though. And I
+believe if those people who have done the real work are to make the
+case, they would have used different argument than just "because C is
+bad".&lt;/p&gt;
+&lt;p&gt;My wisdom over the years is, people who care are too busy to express
+opinions on the Internet; those who are very vocal tend to be doing
+disservice to the things they try to promote. All in all, the Internet
+is just teeming with useless opinions.&lt;/p&gt;
+&lt;p&gt;And I admit this piece is my humble contribution to the pool of
+useless opinions on the Internet. Anyone who takes my words seriously
+is just wasting his or her time.&lt;/p&gt;</summary></entry><entry><title>On Opinions</title><link href="http://blog.liuw.name/on-opinions.html" rel="alternate"></link><updated>2016-02-06T13:23:00+00:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2016-02-06:on-opinions.html</id><summary type="html">&lt;p&gt;I am normally a laid-back person. I don't care about many things that
 are not related to me. Heck, I don't even care about that many things
 that are related to me. I say I have no opinion or no preference all
 the time.&lt;/p&gt;
