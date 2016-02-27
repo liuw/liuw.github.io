@@ -1,5 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Liuw's Thinkpad</title><link href="http://blog.liuw.name/" rel="alternate"></link><link href="http://blog.liuw.name/feeds/wei-liu.atom.xml" rel="self"></link><id>http://blog.liuw.name/</id><updated>2016-02-17T00:24:00+00:00</updated><entry><title>The Internet of Useless Opinions</title><link href="http://blog.liuw.name/the-internet-of-useless-opinions.html" rel="alternate"></link><updated>2016-02-17T00:24:00+00:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2016-02-17:the-internet-of-useless-opinions.html</id><summary type="html">&lt;p&gt;Hacker News is one of the few sites I go to daily because I find
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Liuw's Thinkpad</title><link href="http://blog.liuw.name/" rel="alternate"></link><link href="http://blog.liuw.name/feeds/wei-liu.atom.xml" rel="self"></link><id>http://blog.liuw.name/</id><updated>2016-02-27T01:11:00+00:00</updated><entry><title>Dabbling in Data Structures and Algorithms Once Again</title><link href="http://blog.liuw.name/dabbling-in-data-structures-and-algorithms-once-again.html" rel="alternate"></link><updated>2016-02-27T01:11:00+00:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2016-02-27:dabbling-in-data-structures-and-algorithms-once-again.html</id><summary type="html">&lt;p&gt;Strange it may seem, I don't think I ever dealt with coding interviews
+well. Not that I've never been to one, it is just that I didn't realy
+get my job offers by solving puzzles and writing linked list, tree or
+graph algorithms.&lt;/p&gt;
+&lt;p&gt;When I was in school, I dealt with low level stuff. As system
+administrator I mostly wrote scripts. I just needed to understand how
+a system worked. I worked on various kernels, but most data structures
+and algorithms weren't rocket science there. I studied algorithms
+using some of the prestigious books in the field. But I never used
+them in real life. I thought data structures and algorithms were fun
+and boring at the same time. It was fun because it was like solving
+puzzles, boring because I had no use of it. In the end I didn't spend
+much time on that subject.&lt;/p&gt;
+&lt;p&gt;Then came the job hunting season. It's quite pervasive to ask
+algorithm related questions in interviews. I think I did badly in most
+of them. But I used my other skills to get some job offers. I
+considered myself lucky.&lt;/p&gt;
+&lt;p&gt;Nowadays I ponder from time to time what it would be like to dabble in
+data structures and algorithms again -- what if I want to change job
+at some point? Better keep myself sharp and be ready all the time.  So
+I registered an account on one of the online judge services and picked
+an easy question.&lt;/p&gt;
+&lt;p&gt;The first thing I had to do was to convince myself to leave all the
+error handling logic alone. I stopped asking questions like "what if
+the memory allocation fails" and "how can I sanitise the input" and
+blundered on.&lt;/p&gt;
+&lt;p&gt;The second thing that baffled me was the environment. I was presented
+with a web based editor. My muscle memory worked against me. Every
+time I tried to use Emacs keybindings the editor did something I
+didn't expect. My thought was constantly interrupted. I guess I could
+have used my own development environment to make things easier.&lt;/p&gt;
+&lt;p&gt;Then I sadly discovered that I basically forgot all the relevant bits
+on the subject. Due to time constraint, I tried to invent a caching
+algorithm for the problem, but only to find it harder and harder to
+debug.&lt;/p&gt;
+&lt;p&gt;At that point I was quite frustrated. The problem was marked as
+"easy". I was either too stupid to even solve an easy problem or
+missed something very obvious.&lt;/p&gt;
+&lt;p&gt;It turned out I did miss something. There was an O(n) algorithm for
+the problem with only a few lines of code. I blinded myself with my
+horribly obscured algorithm -- though it was quite close to the
+correct one. I had the "aha" moment when I looked at how other people
+solved it and wondered why I missed that.&lt;/p&gt;
+&lt;p&gt;So my first coming back to the subject was not working well. That is
+more or less expected. People get rusty over time. And in my defense I
+am not used to interview style coding at all. The next step is to pick
+up books and tune myself to get used to the restricted
+environment. Hopefully I can reacquaint myself with this subject and
+make it useful at some point.&lt;/p&gt;</summary></entry><entry><title>The Internet of Useless Opinions</title><link href="http://blog.liuw.name/the-internet-of-useless-opinions.html" rel="alternate"></link><updated>2016-02-17T00:24:00+00:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2016-02-17:the-internet-of-useless-opinions.html</id><summary type="html">&lt;p&gt;Hacker News is one of the few sites I go to daily because I find
 majority of the submissions are of high quality. I seldom comment for
 various reasons (maybe I should expound that in another post), but I
 do enjoy reading interesting and insightful comments about how things
