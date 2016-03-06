@@ -1,5 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Liuw's Thinkpad</title><link>http://blog.liuw.name/</link><description></description><atom:link href="http://blog.liuw.name/feeds/wei-liu.rss.xml" rel="self"></atom:link><lastBuildDate>Sat, 27 Feb 2016 01:11:00 +0000</lastBuildDate><item><title>Dabbling in Data Structures and Algorithms Once Again</title><link>http://blog.liuw.name/dabbling-in-data-structures-and-algorithms-once-again.html</link><description>&lt;p&gt;Strange it may seem, I don't think I ever dealt with coding interviews
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Liuw's Thinkpad</title><link>http://blog.liuw.name/</link><description></description><atom:link href="http://blog.liuw.name/feeds/wei-liu.rss.xml" rel="self"></atom:link><lastBuildDate>Sun, 06 Mar 2016 23:23:00 +0000</lastBuildDate><item><title>Rant: Pissed off by Politics</title><link>http://blog.liuw.name/rant-pissed-off-by-politics.html</link><description>&lt;p&gt;Many Linux distributions function on the basis that people around the
+world subscribe to its ideology. In such model nobody can impose
+anything on anybody else. On a large scale this model works well
+enough to keep several major distributions function properly and
+produce high quality software. But on a smaller scale, things can go
+wrong.&lt;/p&gt;
+&lt;p&gt;I have been user of one Linux distribution D for many years. I like
+way it is organised. I'm quite satisfied with the quality of the
+distribution overall.&lt;/p&gt;
+&lt;p&gt;Then there is one program I use almost daily. For the first time I
+used it, I found out the version in D was quite old comparing to
+upstream version. I sent an email to ask the package maintainer if I
+can help upgrade the package to the latest version. But it turned out
+the package maintainer was aware of that but he wouldn't want to
+upgrade to the latest version because he and the upstream maintainer
+held different ideas of how things should be done.&lt;/p&gt;
+&lt;p&gt;Over the course of 6 years, things didn't get improved. I wasn't
+alone. Many people offered helping hands, but all the effort was
+blocked due the the same reason. And to be honest, to this day nobody
+really understands what is the real reason that blocks this whole
+thing -- it dates back to 16 years ago according to my own
+archaeology, and there isn't any public record. The only information
+people get is that they had discussions and several proposals many
+years ago.&lt;/p&gt;
+&lt;p&gt;The higher level reason is that it "doesn't meets the normal distro
+expectations and standards". In order to not make myself a fool and
+take the wrong side, I check how things are done in other popular
+distributions like G, A and F. It seems that they do have the relative
+new version and aren't concerned with the blocker mentioned in D's
+package.&lt;/p&gt;
+&lt;p&gt;At this point I feel frustrated and pissed. On one hand I respect the
+package maintainer because he obviously put huge amount of effort into
+this package - he went as far as writing a huge patch to did things
+the way he saw fit and maintained that patch for years; on the other
+hand it looks like he is holding hostage of everybody using D to make
+his proposal accepted upstream.&lt;/p&gt;
+&lt;p&gt;Politics is inevitable in life. But I don't want to see a
+volunteer-based open source project turned into an arena for people
+who push for their private agendas while actively harming the interest
+of wider community.&lt;/p&gt;
+&lt;p&gt;I would either package my own version or write to D mailing list to
+take over the project. As of today I've finished a preliminary version
+of the new package, with all the cruft removed. I also filed a new bug
+report to urge the package maintainer to reconsider upgrading to the
+latest upstream version.  I don't like to aggressively take over
+things, but for the benefit of larger community, I will do what needs
+to be done.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Wei Liu</dc:creator><pubDate>Sun, 06 Mar 2016 23:23:00 +0000</pubDate><guid>tag:blog.liuw.name,2016-03-06:rant-pissed-off-by-politics.html</guid></item><item><title>Dabbling in Data Structures and Algorithms Once Again</title><link>http://blog.liuw.name/dabbling-in-data-structures-and-algorithms-once-again.html</link><description>&lt;p&gt;Strange it may seem, I don't think I ever dealt with coding interviews
 well. Not that I've never been to one, it is just that I didn't realy
 get my job offers by solving puzzles and writing linked list, tree or
 graph algorithms.&lt;/p&gt;
