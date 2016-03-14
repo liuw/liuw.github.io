@@ -1,5 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Liuw's Thinkpad</title><link href="http://blog.liuw.name/" rel="alternate"></link><link href="http://blog.liuw.name/feeds/wei-liu.atom.xml" rel="self"></link><id>http://blog.liuw.name/</id><updated>2016-03-06T23:23:00+00:00</updated><entry><title>Rant: Pissed off by Politics</title><link href="http://blog.liuw.name/rant-pissed-off-by-politics.html" rel="alternate"></link><updated>2016-03-06T23:23:00+00:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2016-03-06:rant-pissed-off-by-politics.html</id><summary type="html">&lt;p&gt;Many Linux distributions function on the basis that people around the
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Liuw's Thinkpad</title><link href="http://blog.liuw.name/" rel="alternate"></link><link href="http://blog.liuw.name/feeds/wei-liu.atom.xml" rel="self"></link><id>http://blog.liuw.name/</id><updated>2016-03-13T15:20:00+00:00</updated><entry><title>Random Thoughts</title><link href="http://blog.liuw.name/random-thoughts.html" rel="alternate"></link><updated>2016-03-13T15:20:00+00:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2016-03-13:random-thoughts.html</id><summary type="html">&lt;p&gt;I once talked with my friend, who worked in the field of
+virtualisation but in a proprietary software company, about work
+practice and code quality. His conclusion was that open source
+solution was not as well tested and organised as the proprietary one.&lt;/p&gt;
+&lt;p&gt;I actually agreed with him, because open source software seemed to be
+generally lacking investment. It's next to impossible for our project
+to have the equivalent amount of money invested in proprietary
+product. While many companies use open source projects for their
+products, they either don't have those projects being critical part of
+the products or have enough talents to essentially maintain their own
+fork if upstream projects go unmaintained.&lt;/p&gt;
+&lt;p&gt;Why should companies invest in upstream, if at all? Surely they don't
+want to easily give away their technology; on the other hand, they
+want useful stuff from upstream (contributed by other
+entities). Basically the incentive is to share as little as possible
+but gain as much as possible. The only concern is that their own fork
+might divert from upstream which then makes pulling in changes
+impossible. This is not insurmountable provided they have enough money
+to pay for the on going maintainence burden.&lt;/p&gt;
+&lt;p&gt;So I think open source software development model would only work if
+those companies who contribute to open source software projects are
+not directly making money off the software itself. Open source
+software can be a core part of their infrastructure (service
+provider), can be a basis of their offering (software company * ), can be
+a booster for selling their core product (hardware company).&lt;/p&gt;
+&lt;p&gt;Needless to say, open source software is important. It's utility
+now. As an individual who is enthusiastic in developing open source
+software, having relevant experience in the field should be enough to
+get myself a job. But then I am a bit pessimistic for open source
+software based business model. I surely don't want to start another
+utility company now.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Note the line for software companies is a bit blurred -- one could
+argue that they are directly making money off open source software,
+but I disagree -- because the software is freely (as in beer)
+distributed, they can't or don't charge money for it, instead, they
+sell support contract.&lt;/li&gt;
+&lt;/ul&gt;</summary></entry><entry><title>Rant: Pissed off by Politics</title><link href="http://blog.liuw.name/rant-pissed-off-by-politics.html" rel="alternate"></link><updated>2016-03-06T23:23:00+00:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2016-03-06:rant-pissed-off-by-politics.html</id><summary type="html">&lt;p&gt;Many Linux distributions function on the basis that people around the
 world subscribe to its ideology. In such model nobody can impose
 anything on anybody else. On a large scale this model works well
 enough to keep several major distributions function properly and
