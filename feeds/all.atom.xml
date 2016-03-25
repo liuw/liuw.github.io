@@ -1,5 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Liuw's Thinkpad</title><link href="http://blog.liuw.name/" rel="alternate"></link><link href="http://blog.liuw.name/feeds/all.atom.xml" rel="self"></link><id>http://blog.liuw.name/</id><updated>2016-03-13T15:20:00+00:00</updated><entry><title>Random Thoughts</title><link href="http://blog.liuw.name/random-thoughts.html" rel="alternate"></link><updated>2016-03-13T15:20:00+00:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2016-03-13:random-thoughts.html</id><summary type="html">&lt;p&gt;I once talked with my friend, who worked in the field of
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Liuw's Thinkpad</title><link href="http://blog.liuw.name/" rel="alternate"></link><link href="http://blog.liuw.name/feeds/all.atom.xml" rel="self"></link><id>http://blog.liuw.name/</id><updated>2016-03-25T17:16:00+00:00</updated><entry><title>Factors for Sustaining an Open Source Project</title><link href="http://blog.liuw.name/factors-for-sustaining-an-open-source-project.html" rel="alternate"></link><updated>2016-03-25T17:16:00+00:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2016-03-25:factors-for-sustaining-an-open-source-project.html</id><summary type="html">&lt;p&gt;When I was young and naive, working on open source project was just
+writing code to me. Nowadays, it means much more than that. No doubt,
+there are many geniuses in the world, who create so many amazing open
+source software projects, but to sustain those projects going forward,
+I think we can't rely merely on raw talent. To sustain a project going
+forward, there are quite a few intertwining factors -- hence the order
+I mention them doesn't really matter.&lt;/p&gt;
+&lt;p&gt;The first factor is acquiring new talents, building a pool of people
+that have the skill and willingness to work on a particular
+project. When a project is young and exciting, it's probably not too
+hard. But when a project becomes mature, it might be perceived as
+uncool and harder to get new talents.&lt;/p&gt;
+&lt;p&gt;The second factor is having good governance. This is easier said than
+done. Having any governance is better than no governance, having
+bad governance is detrimental to project in the long run. A good
+governance is crucial to enlarging community -- hence important to
+both acquiring new talents and users. For open source software this
+probably means clear document on how the project is run, the path to
+reach the top for the ambitious, clear guide on how to contribute etc.&lt;/p&gt;
+&lt;p&gt;The third factor is commercial interest. It's absolutely not a shame
+to make money from open source software. On the contrary, I would be
+very happy to see people use open source software to make money in
+ethical ways. On individual level, people need to pay their bills
+after all. On organisational level, a company needs return for its
+investment.&lt;/p&gt;
+&lt;p&gt;The fourth factor is tooling. That includes communication channels,
+review tools, infrastructure and so on and so forth -- anything that
+would affect how people cooperate.&lt;/p&gt;
+&lt;p&gt;The fifth factor is engaging with upstream and downstream. Work with
+them, don't suddenly introduce intrusive / controversial changes or
+incompatible breakages. Be nice to them and they will be nice to you.&lt;/p&gt;
+&lt;p&gt;The project I work for used to suffer quite a bit for lacking
+everything I mentioned above. Luckily it survived. But it's not yet
+all perfect -- there are quite some annoyances waiting to be fixed in
+governance and on boarding new talents. The good thing is that the
+community is aware of those road blocks and trying actively to remove
+them.&lt;/p&gt;</summary></entry><entry><title>Random Thoughts</title><link href="http://blog.liuw.name/random-thoughts.html" rel="alternate"></link><updated>2016-03-13T15:20:00+00:00</updated><author><name>Wei Liu</name></author><id>tag:blog.liuw.name,2016-03-13:random-thoughts.html</id><summary type="html">&lt;p&gt;I once talked with my friend, who worked in the field of
 virtualisation but in a proprietary software company, about work
 practice and code quality. His conclusion was that open source
 solution was not as well tested and organised as the proprietary one.&lt;/p&gt;
